@@ -1,21 +1,13 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Row, Col, Form, Input, Button, Divider } from "antd";
+import "./signinStyles.css";
 
 export default function Signin() {
   return (
     <React.Fragment>
-      <Form name="signupForm">
-        <label htmlFor="">Full name</label>
-        <Form.Item
-        // label="Full name"
-        // validateStatus=""
-        // help=""
-        >
-          <Input className="form-input" />
-        </Form.Item>
+      <Form name="signupForm" className="signin-form">
         <label htmlFor="">Email</label>
         <Form.Item
-          // label="Eamil"
           name="email"
           // validateStatus=""
           // help=""
@@ -24,32 +16,32 @@ export default function Signin() {
         </Form.Item>
         <label htmlFor="">Password</label>
         <Form.Item
-          // label="Password"
           name="password"
           // validateStatus=""
           // help=""
         >
           <Input.Password className="form-input-password" />
         </Form.Item>
-        <label htmlFor="">Phone number</label>
-        <Form.Item
-        //label="Phone number"
-        // validateStatus=""
-        // help=""
-        >
-          <Input className="form-input" />
-        </Form.Item>
-        <Form.Item
-        // wrapperCol={{
-        //   offset: 8,
-        //   span: 16,
-        // }}
-        >
+
+        <Form.Item>
           <Button htmlType="submit" className="submit-button" block>
-            Signup
+            Login
           </Button>
         </Form.Item>
       </Form>
+      <Divider>OR</Divider>
+      <Row justify="space-between" align="middle" className="">
+        <Col span={6}>
+          <Button className="button-signin-facebook" block>
+            Facebook
+          </Button>
+        </Col>
+        <Col span={6}>
+          <Button className="button-signin-google" block>
+            Google
+          </Button>
+        </Col>
+      </Row>
     </React.Fragment>
   );
 }

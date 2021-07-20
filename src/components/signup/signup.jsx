@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
+import "./signupStyles.css";
 
 export default function Signup() {
   return (
@@ -46,7 +47,7 @@ export default function Signup() {
         // }}
         >
           <Button htmlType="submit" className="submit-button" block>
-            Signup
+            Login
           </Button>
         </Form.Item>
       </Form>

@@ -1,15 +1,28 @@
 import React from "react";
 import { Row, Col, Image, Card, Button } from "antd";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Signin from "../../components/signin/signin";
 import Signup from "../../components/signup/signup";
 
-export default function Access() {
+export default function Access(props) {
+  const [isOnLogin, setIsOnLogin] = React.useState(true);
+  const [isOnSignup, setIsOnSignup] = React.useState(false);
+  const navigateToSignin = () => {
+    props.history.push("/app/signin");
+    setIsOnLogin(true);
+    setIsOnSignup(false);
+  };
+  const navigateToSignup = () => {
+    props.history.push("/app/signup");
+    setIsOnSignup(true);
+    setIsOnLogin(false);
+  };
   return (
     <div className="sign-page-content">
-      <div className="signup-content">
+      <div className="sign-content">
         <Row justify="center" align="middle">
           <Col span={6} className="image-card-wrapper">
-            <Card style={{ width: 275 }} className="image-card">
+            <Card style={{ width: 275, height: 355 }} className="image-card">
               <div className="card-image-wrapper">
                 <Image
                   width={175}
@@ -20,29 +33,48 @@ export default function Access() {
               </div>
             </Card>
           </Col>
-          <Col span={6} className="signup-card-wrapper">
-            <Card style={{ width: 300, height: 408 }} className="form-card">
-              <div className="signup-form-wrapper">
+          <Col span={6} className="sign-card-wrapper">
+            <Card style={{ width: 300, height: 425 }} className="form-card">
+              <div className="sign-form-wrapper">
                 <Row
                   className="action-button-wrapper"
                   justify="space-between"
                   align="middle"
                 >
                   <Col span={6}>
-                    <Button type="link" size="large" className="signin-button">
+                    <Button
+                      type="link"
+                      size="large"
+                      className={
+                        isOnLogin
+                          ? "signin-button button-active"
+                          : "signin-button button-inactive"
+                      }
+                      onClick={navigateToSignin}
+                    >
                       Login
                     </Button>
-                    {/* <div className="button-bottom-border"></div> */}
+                    <div className="button-bottom-border button-bottom-border-signin"></div>
                   </Col>
                   <Col span={6}>
-                    <Button type="link" size="large" className="signup-button">
+                    <Button
+                      type="link"
+                      size="large"
+                      className={
+                        isOnSignup
+                          ? "signup-button button-active"
+                          : "signup-button button-inactive"
+                      }
+                      onClick={navigateToSignup}
+                    >
                       Signup
                     </Button>
-                    <div className="button-bottom-border"></div>
+                    <div className="button-bottom-border button-bottom-border-signup"></div>
                   </Col>
                 </Row>
-                {/* Call either component */}
-                <Signup />
+                {/* Calling either component */}
+                <Route exact path="/app/signup" component={Signup} />
+                <Route exact path="/app/signin" component={Signin} />
               </div>
             </Card>
           </Col>

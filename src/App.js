@@ -9,7 +9,7 @@ function App() {
       <React.Fragment>
         <BrowserRouter>
           <Switch>
-            <Route exact path = "/app/signup" component = {Access} />
+            <Route path = "/app" component = {Access} />
           </Switch>
         </BrowserRouter>
       </React.Fragment>

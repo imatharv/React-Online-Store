@@ -13,57 +13,62 @@
   color: #1890ff;
 }
 
-/* SIGNUP */
-.signup-content .ant-col-6 {
+/* SIGN WRAPPER */
+.sign-content .ant-col-6 {
   max-width: unset;
 }
-.signup-content .signup-card-wrapper .form-card .ant-card-body {
-  padding: 12px 24px;
+.sign-content .sign-card-wrapper .form-card .ant-card-body {
+  padding: unset 24px;
 }
-.signup-content .image-card {
+.sign-content .image-card {
   background-color: #f5f5f5;
   border: 1px solid #e4e4e4;
-}
-.signup-content .image-card {
+  display: flex;
+  align-items: center;
   padding: 25px;
   border-radius: 20px 0px 0px 20px;
 }
-.signup-content .image-card .ant-image-img {
+.sign-content .image-card .ant-image-img {
   border-radius: 100px;
   margin-bottom: 20px;
+  align-self: center;
 }
-.signup-content .image-card p {
+.sign-content .image-card p {
   text-align: center;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 0;
 }
-.signup-content .form-card {
+.sign-content .form-card {
   background-color: #ffffff;
   border: 1px solid #e4e4e4;
   box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
   border-radius: 0px;
   /* height: 400px; */
 }
-.signup-content .signup-card-wrapper .action-button-wrapper {
-  margin-bottom: 20px;
+.sign-content .sign-card-wrapper .action-button-wrapper {
+  margin-bottom: 16px;
 }
-.signup-content .signup-card-wrapper .action-button-wrapper .signup-button,
+.sign-content .sign-card-wrapper .action-button-wrapper .signup-button,
 .signin-button {
   font-weight: 700 !important;
   padding-bottom: 0px !important;
+  padding-top: 0px !important;
   text-transform: uppercase;
 }
-.signup-content .signup-card-wrapper .action-button-wrapper .signin-button {
+/* .sign-content .sign-card-wrapper .action-button-wrapper .signin-button {
+  color: #9c9c9c;
+} 
+.sign-content .sign-card-wrapper .action-button-wrapper .signup-button {
+  color: #282c34;
+} */
+.button-inactive {
   color: #9c9c9c;
 }
-.signup-content .signup-card-wrapper .action-button-wrapper .signup-button {
+.button-active {
   color: #282c34;
 }
-.signup-content
-  .signup-card-wrapper
-  .action-button-wrapper
-  .button-bottom-border {
+.sign-content .sign-card-wrapper .action-button-wrapper .button-bottom-border {
   margin-inline: auto;
   height: 3px;
   width: 30px;
@@ -72,34 +77,49 @@
   border: none;
   box-shadow: 0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
-.signup-card-wrapper {
-  /* margin-top: -25px; */
-}
-.signup-form-wrapper {
+
+/* SIGNUP */
+.sign-form-wrapper {
   padding: 0px 20px;
 }
-.signup-card-wrapper .signup-form-wrapper label {
+.sign-card-wrapper .sign-form-wrapper label {
   font-size: 12px;
   font-weight: 500;
 }
-.signup-card-wrapper .signup-form-wrapper .ant-form-item {
+.sign-card-wrapper .sign-form-wrapper .ant-form-item {
   margin-bottom: 12px;
 }
-.signup-card-wrapper .signup-form-wrapper .submit-button {
+.sign-card-wrapper .sign-form-wrapper .submit-button {
   margin-top: 12px;
   background-color: #a03037;
   color: #ffffff;
 }
-.signup-card-wrapper .signup-form-wrapper .ant-input:hover,
+.sign-card-wrapper .sign-form-wrapper .ant-input:hover,
 .ant-input:focus,
 .ant-input::selection,
 .ant-input-affix-wrapper-focused {
   border-color: #9d9d9d !important;
   box-shadow: none !important;
 }
-.signup-card-wrapper .signup-form-wrapper .ant-input-password:hover,
+.sign-card-wrapper .sign-form-wrapper .ant-input-password:hover,
 .ant-input-password:focus,
 .ant-input-password::selection {
   border-color: #9d9d9d !important;
   box-shadow: none !important;
+}
+
+/* SIGNIN */
+
+.button-signin-facebook {
+  background-color: #4266b2 !important;
+  color: #ffffff !important;
+  width: 100px !important;
+}
+.button-signin-google {
+  background-color: #f5f5f5 !important;
+  color: #192133 !important;
+  width: 100px !important;
+}
+.signin-form {
+  margin-top: 40px !important;
 }
