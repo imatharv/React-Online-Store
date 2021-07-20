@@ -3,7 +3,7 @@ import { Row, Col, Image, Card, Button } from "antd";
 import Signin from "../../components/signin/signin";
 import Signup from "../../components/signup/signup";
 
-export default function SignupPage() {
+export default function Access() {
   return (
     <div className="sign-page-content">
       <div className="signup-content">
