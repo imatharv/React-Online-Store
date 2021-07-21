@@ -1,22 +1,22 @@
 import React from "react";
-import { Row, Col, Image, Card, Button } from "antd";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Row, Col, Tabs, Image, Card, Button } from "antd";
+import { Route } from "react-router-dom";
 import Signin from "../../components/signin/signin";
 import Signup from "../../components/signup/signup";
 
+const { TabPane } = Tabs;
+
 export default function Access(props) {
-  const [isOnLogin, setIsOnLogin] = React.useState(true);
-  const [isOnSignup, setIsOnSignup] = React.useState(false);
+  function callback(key) {
+    // console.log(key);
+  }
   const navigateToSignin = () => {
     props.history.push("/app/signin");
-    setIsOnLogin(true);
-    setIsOnSignup(false);
   };
   const navigateToSignup = () => {
     props.history.push("/app/signup");
-    setIsOnSignup(true);
-    setIsOnLogin(false);
   };
+
   return (
     <div className="sign-page-content">
       <div className="sign-content">
@@ -26,8 +26,8 @@ export default function Access(props) {
               <div className="card-image-wrapper">
                 <Image
                   width={175}
-                  //src="../../ass"
-                  src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A7b0eeb81-a918-4f41-9bc2-f508474e79ce&params=version%3A0&token=1626848142_da39a3ee_9f3061e66e371dc66ca6967baa448657f67f8667&api_key=CometServer1"
+                  //src="../../assets/"
+                  src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A85534115-ba16-412e-b646-6dd43d839dd8&params=version%3A0&token=1626925903_da39a3ee_25ce428568888517dfdb9dada9020e3e22d15553&api_key=CometServer1"
                 />
                 <p> Online book shopping</p>
               </div>
@@ -36,45 +36,53 @@ export default function Access(props) {
           <Col span={6} className="sign-card-wrapper">
             <Card style={{ width: 300, height: 425 }} className="form-card">
               <div className="sign-form-wrapper">
-                <Row
+                {/* <Row
                   className="action-button-wrapper"
                   justify="space-between"
                   align="middle"
-                >
-                  <Col span={6}>
-                    <Button
-                      type="link"
-                      size="large"
-                      className={
-                        isOnLogin
-                          ? "signin-button button-active"
-                          : "signin-button button-inactive"
-                      }
-                      onClick={navigateToSignin}
-                    >
-                      Login
-                    </Button>
-                    <div className="button-bottom-border button-bottom-border-signin"></div>
-                  </Col>
-                  <Col span={6}>
-                    <Button
-                      type="link"
-                      size="large"
-                      className={
-                        isOnSignup
-                          ? "signup-button button-active"
-                          : "signup-button button-inactive"
-                      }
-                      onClick={navigateToSignup}
-                    >
-                      Signup
-                    </Button>
-                    <div className="button-bottom-border button-bottom-border-signup"></div>
-                  </Col>
-                </Row>
+                > */}
+                <Tabs defaultActiveKey="1" onChange={callback} centered>
+                  <TabPane
+                    tab={
+                      <Col span={6}>
+                        <Button
+                          type="link"
+                          size="large"
+                          className="signin-button"
+                          onClick={navigateToSignin}
+                        >
+                          Login
+                        </Button>
+                        {/* <div className="button-bottom-border button-bottom-border-signin"></div> */}
+                      </Col>
+                    }
+                    key="1"
+                  >
+                    <Route exact path="/app/signin" component={Signin} />
+                  </TabPane>
+                  <TabPane
+                    tab={
+                      <Col span={6}>
+                        <Button
+                          type="link"
+                          size="large"
+                          className="signup-button"
+                          onClick={navigateToSignup}
+                        >
+                          Signup
+                        </Button>
+                        {/* <div className="button-bottom-border button-bottom-border-signup"></div> */}
+                      </Col>
+                    }
+                    key="2"
+                  >
+                    <Route exact path="/app/signup" component={Signup} />
+                  </TabPane>
+                </Tabs>
+                {/* </Row> */}
                 {/* Calling either component */}
-                <Route exact path="/app/signup" component={Signup} />
-                <Route exact path="/app/signin" component={Signin} />
+                {/* <Route exact path="/app/signup" component={Signup} /> */}
+                {/* <Route exact path="/app/signin" component={Signin} /> */}
               </div>
             </Card>
           </Col>

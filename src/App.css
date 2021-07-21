@@ -39,34 +39,41 @@
   text-transform: uppercase;
   margin-bottom: 0;
 }
+.sign-content .ant-tabs-tab {
+  padding: 0px !important;
+}
+.ant-tabs-tab .ant-tabs-tab-btn,
+.ant-btn-link {
+  color: #9c9c9c !important;
+}
+.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-btn-link {
+  color: #282c34 !important;
+}
+.ant-tabs-bar {
+  border-bottom: none !important;
+}
+.ant-tabs-ink-bar {
+  height: 3px !important;
+  border-radius: 3px !important;
+  background: #a03037 !important;
+}
 .sign-content .form-card {
   background-color: #ffffff;
   border: 1px solid #e4e4e4;
-  box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0rem 0.5rem 1rem rgba(39, 35, 35, 0.15);
   border-radius: 0px;
   /* height: 400px; */
 }
 .sign-content .sign-card-wrapper .action-button-wrapper {
   margin-bottom: 16px;
 }
-.sign-content .sign-card-wrapper .action-button-wrapper .signup-button,
+.sign-content .sign-card-wrapper .signup-button,
 .signin-button {
   font-weight: 700 !important;
   padding-bottom: 0px !important;
   padding-top: 0px !important;
   text-transform: uppercase;
-}
-/* .sign-content .sign-card-wrapper .action-button-wrapper .signin-button {
-  color: #9c9c9c;
-} 
-.sign-content .sign-card-wrapper .action-button-wrapper .signup-button {
-  color: #282c34;
-} */
-.button-inactive {
-  color: #9c9c9c;
-}
-.button-active {
-  color: #282c34;
 }
 .sign-content .sign-card-wrapper .action-button-wrapper .button-bottom-border {
   margin-inline: auto;
