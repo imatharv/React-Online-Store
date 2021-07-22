@@ -10,6 +10,6 @@ export default class UserService {
     }
 
     login = (data) => {
-        return axios.postMethod(`${this.baseURL}/bookstore_user/login`, data);
+        return axios.postMethod(`${this.baseURL}bookstore_user/login`, data);
     }
 }

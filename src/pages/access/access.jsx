@@ -11,10 +11,10 @@ export default function Access(props) {
     // console.log(key);
   }
   const navigateToSignin = () => {
-    props.history.push("/app/signin");
+    props.history.push("/account/signin");
   };
   const navigateToSignup = () => {
-    props.history.push("/app/signup");
+    props.history.push("/account/signup");
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Access(props) {
                 <Image
                   width={175}
                   //src="../../assets/"
-                  src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A85534115-ba16-412e-b646-6dd43d839dd8&params=version%3A0&token=1626925903_da39a3ee_25ce428568888517dfdb9dada9020e3e22d15553&api_key=CometServer1"
+                  src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A85534115-ba16-412e-b646-6dd43d839dd8&params=version%3A0&token=1627012407_da39a3ee_18004aa0ac18f190719c0e1638be002a9c8ae300&api_key=CometServer1"
                 />
                 <p> Online book shopping</p>
               </div>
@@ -58,7 +58,7 @@ export default function Access(props) {
                     }
                     key="1"
                   >
-                    <Route exact path="/app/signin" component={Signin} />
+                    <Route exact path="/account/signin" component={Signin} />
                   </TabPane>
                   <TabPane
                     tab={
@@ -76,7 +76,7 @@ export default function Access(props) {
                     }
                     key="2"
                   >
-                    <Route exact path="/app/signup" component={Signup} />
+                    <Route exact path="/account/signup" component={Signup} />
                   </TabPane>
                 </Tabs>
                 {/* </Row> */}

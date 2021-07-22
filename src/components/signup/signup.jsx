@@ -79,7 +79,7 @@ export default function Signup(props) {
     if (validate()) {
       console.log("Registration api call");
       let data = {
-        fullname: name,
+        fullName: name,
         email: email,
         password: password,
         phone: phoneNumber,

@@ -11,9 +11,11 @@ export default function Signin() {
   const [passwordErrorMsg, setPasswordErrorMsg] = React.useState("");
 
   const handleEmailInputChange = (event) => {
+    console.log(email);
     setEmail(event.target.value);
   };
   const handlePasswordInputChange = (event) => {
+    console.log(password);
     setPassword(event.target.value);
   };
   const validate = () => {
@@ -44,6 +46,10 @@ export default function Signin() {
       Service.login(data)
         .then((data) => {
           console.log(data);
+          window.sessionStorage.setItem(
+            "accessToken",
+            data.data.result.accessToken
+          );
         })
         .catch((error) => {
           console.log("Data posting error: ", error);

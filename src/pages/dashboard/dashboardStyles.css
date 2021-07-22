@@ -1,0 +1,102 @@
+.ant-layout {
+  background: #fff;
+}
+.site-layout-heading {
+  margin-left: 110px !important;
+}
+.site-layout-heading h1 {
+  margin-bottom: 0px !important;
+  display: inline !important;
+}
+.site-layout-heading .product-count {
+  color: darkgray;
+  margin-left: 3px;
+}
+.site-layout-heading .product-count::before {
+  content: "(";
+}
+.site-layout-heading .product-count::after {
+  content: " items)";
+}
+.site-layout-content {
+  min-height: 70vh;
+  padding: 0px 24px 24px 24px;
+  background: #fff;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#components-layout-demo-top .logo {
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+  margin: 16px 0 16px 24px;
+}
+.ant-menu-item-active {
+  background: transparent !important;
+}
+.ant-input-group-addon {
+  position: relative;
+  padding: 0px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  background-color: #fafafa;
+  border: none !important;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.ant-layout-header .dropdown-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ant-layout-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 20px 50px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 50px;
+  background: #a03037;
+}
+.ant-layout-footer {
+  padding: 20px 50px;
+  color: #dadada;
+  font-size: 14px;
+  background: #282f3b;
+}
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub {
+  color: rgba(255, 255, 255, 0.65);
+  background: #a03037;
+}
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: transparent;
+}
+.logo {
+  display: flex !important;
+  font-weight: 500;
+  margin-top: 5px;
+}
+.logo img {
+  margin-top: 11px;
+  height: 25px;
+  width: auto;
+}
+.logo h3 {
+  color: #fff;
+  margin-left: 10px;
+}
