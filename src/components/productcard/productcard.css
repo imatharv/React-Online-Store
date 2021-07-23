@@ -75,3 +75,75 @@
 .price-wrapper .real-price::before {
   content: "₹";
 }
+
+/* MEDIA SCREEN */
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .ant-card-cover {
+    padding: 8px 16px;
+  }
+  .ant-card-cover img {
+    height: 70px !important;
+    width: auto;
+  }
+  .product-card {
+    width: 40% !important;
+    height: 190px;
+  }
+  .product-card .ant-card-body {
+    padding: 10px;
+  }
+  .product-card .ant-card-meta-title {
+    font-size: 13px !important;
+  }
+  .product-card .rating-wrapper .ant-tag {
+    padding: 0px 5px;
+  }
+  .product-card .price-wrapper {
+    font-size: 14px !important;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .ant-card-cover {
+    padding: 12px 24px;
+  }
+  .ant-card-cover img {
+    height: 90px !important;
+    width: auto;
+  }
+  .product-card {
+    width: 175px !important;
+    height: 220px;
+  }
+  .product-card .ant-card-body {
+    padding: 10px;
+  }
+  .product-card .ant-card-meta-title {
+    font-size: 13px !important;
+  }
+  .product-card .rating-wrapper .ant-tag {
+    padding: 0px 5px;
+  }
+  .product-card .price-wrapper {
+    font-size: 14px !important;
+  }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+}
+
+/* X-Large devices (large desktops, less than 1400px) */
+@media (max-width: 1399.98px) {
+}
+
+/* Between breakpoints */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}

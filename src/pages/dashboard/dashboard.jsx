@@ -4,6 +4,7 @@ import ProductService from "../../services/productService";
 import { Layout, Menu, Breadcrumb, Dropdown } from "antd";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import ProductCard from "../../components/productcard/productcard";
+import ProductDetails from "../../components/bookdetails/bookdetails";
 
 const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
@@ -61,7 +62,17 @@ export default function Dashboard() {
   }, []);
   return (
     <Layout className="layout">
-      <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+      <Header
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={(broken) => {
+          console.log(broken);
+        }}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type);
+        }}
+        style={{ position: "fixed", zIndex: 1, width: "100%" }}
+      >
         <div className="logo">
           <img
             src="https://image.flaticon.com/icons/png/512/327/327116.png"
@@ -135,7 +146,8 @@ export default function Dashboard() {
           </Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-content">
-          <ProductCard data={data} />
+          {/* <ProductCard data={data} /> */}
+          <ProductDetails data={data} />
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>

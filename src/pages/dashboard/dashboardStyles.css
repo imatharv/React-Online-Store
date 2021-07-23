@@ -1,3 +1,5 @@
+/* LAYOUT */
+
 .ant-layout {
   background: #fff;
 }
@@ -99,4 +101,50 @@
 .logo h3 {
   color: #fff;
   margin-left: 10px;
+}
+
+/* MEDIA SCREEN */
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .ant-layout-content {
+    padding: 0px !important;
+  }
+  .ant-layout-content .site-layout-heading {
+    margin-left: 0px !important;
+  }
+  .ant-layout-content .site-layout-content {
+    justify-content: flex-start;
+    padding: 0px 10px 10px 10px;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .ant-layout-content {
+    padding: 0px !important;
+  }
+  .ant-layout-content .site-layout-heading {
+    margin-left: 20px !important;
+  }
+  .ant-layout-content .site-layout-content {
+    justify-content: flex-start;
+    padding: 0px 10px 10px 10px;
+  }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+}
+
+/* X-Large devices (large desktops, less than 1400px) */
+@media (max-width: 1399.98px) {
+}
+
+/* Between breakpoints */
+@media (min-width: 768px) and (max-width: 1199.98px) {
 }

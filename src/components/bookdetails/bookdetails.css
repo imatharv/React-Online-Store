@@ -1,0 +1,179 @@
+.product-image-container {
+  width: 40%;
+}
+.product-details-container {
+  width: 60%;
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start; */
+}
+.product-details-divider {
+  border-width: 2.5px !important;
+}
+.product-details-wrapper {
+  margin-bottom: 10px;
+}
+.product-details-wrapper .product-title {
+  margin-bottom: 0px !important;
+  font-size: 28px !important;
+  font-weight: 600;
+}
+.product-details-wrapper .product-author {
+  color: darkgray;
+  margin-bottom: 0px !important;
+  font-size: 18px !important;
+}
+
+.product-rating-wrapper {
+  margin-bottom: 10px;
+}
+.product-rating-wrapper .card-tag {
+  /* font-size: 11px; */
+  background-color: rgb(1, 153, 1);
+  color: white;
+  font-weight: 600;
+}
+.product-rating-wrapper .rating-icon {
+  /* font-size: 10px; */
+  margin-left: 3px;
+}
+.product-rating-wrapper .rating-count {
+  /* font-size: 12px; */
+  font-weight: 500;
+  color: rgb(173, 173, 173);
+}
+.product-rating-wrapper .ant-tag {
+  margin-right: 3px !important;
+  border-radius: 4px !important;
+}
+.product-price-wrapper .discounted-price::before {
+  font-weight: 600;
+  margin-right: 1px;
+  color: black;
+  content: "₹";
+}
+.product-price-wrapper .discounted-price {
+  font-size: 26px;
+  font-weight: 600;
+  margin-left: 0px;
+  color: black;
+}
+.product-price-wrapper .real-price {
+  vertical-align: text-bottom;
+  font-weight: 400;
+  margin-left: 6px;
+  text-decoration: line-through;
+  color: darkgrey;
+}
+.product-price-wrapper .real-price::before {
+  content: "₹";
+}
+.product-details-wrapper .product-details {
+  padding-left: 20px !important;
+}
+.product-details-wrapper .product-details .details-title {
+  font-size: 18px;
+  color: rgb(173, 173, 173);
+}
+.product-details-wrapper .product-details p {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.customer-feedback-wrapper .feedback-form {
+  background: rgb(240, 240, 240);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.customer-feedback-wrapper .feedback-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.customer-feedback-wrapper .feedback-form .ratings-title {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.customer-feedback-wrapper .feedback-form .feedback-ratings-wrapper {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.customer-feedback-wrapper .feedback-form .feedback-text {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.customer-feedback-wrapper .feedback-form .ant-input {
+  border: none !important;
+}
+.customer-feedback-wrapper .feedback-form .feedback-submit {
+  text-align: right;
+}
+.product-review-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.product-review-list-wrapper .avatar-wrapper {
+  padding: 2px 10px 2px 2px;
+}
+.product-review-list-wrapper .reviewer-name h5 {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+.product-review-list-wrapper .review-details {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+.product-image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.product-image-list {
+  padding: 5px;
+}
+.product-image-wrapper {
+  padding: 5px;
+}
+/* MEDIA SCREEN */
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  /* .ant-card-cover {
+    padding: 8px 16px;
+  }
+  .ant-card-cover img {
+    height: 70px !important;
+    width: auto;
+  } */
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  /* .ant-card-cover {
+    padding: 12px 24px;
+  }
+  .ant-card-cover img {
+    height: 90px !important;
+    width: auto;
+  } */
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+}
+
+/* X-Large devices (large desktops, less than 1400px) */
+@media (max-width: 1399.98px) {
+}
+
+/* Between breakpoints */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}
