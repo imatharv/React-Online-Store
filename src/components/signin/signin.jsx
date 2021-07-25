@@ -4,18 +4,16 @@ import "./signinStyles.css";
 import UserService from "../../services/userService";
 const Service = new UserService();
 
-export default function Signin() {
+export default function Signin(props) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [emailErrorMsg, setEmailErrorMsg] = React.useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = React.useState("");
 
   const handleEmailInputChange = (event) => {
-    console.log(email);
     setEmail(event.target.value);
   };
   const handlePasswordInputChange = (event) => {
-    console.log(password);
     setPassword(event.target.value);
   };
   const validate = () => {
@@ -38,24 +36,23 @@ export default function Signin() {
   };
   const login = () => {
     if (validate()) {
-      console.log("Login api call");
       let data = {
         email: email,
         password: password,
       };
       Service.login(data)
         .then((data) => {
-          console.log(data);
           window.sessionStorage.setItem(
             "accessToken",
             data.data.result.accessToken
           );
+          props.history.push("/dashboard");
         })
         .catch((error) => {
-          console.log("Data posting error: ", error);
+          console.log(error);
         });
     } else {
-      console.info("Register :: empty data");
+      console.info("Login :: empty data");
     }
   };
   return (

@@ -1,0 +1,180 @@
+.image-list {
+  height: 60px;
+  width: auto;
+}
+.cart-layout-content {
+  min-height: 70vh;
+  padding: 0px 24px 24px 24px;
+  background: #fff;
+  /* margin: 50px 0px; */
+  width: 70%;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  margin-inline: auto;
+}
+
+.cart-details-wrapper,
+.customer-details-wrapper,
+.order-summary-wrapper {
+  padding: 25px;
+  border: 2px solid rgb(231, 231, 231);
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.cart-details-wrapper .cart-details-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+/* .cart-details-wrapper .cart-details-header .ant-select .location-icon {
+  margin-top: 7px;
+  margin-right: 5px;
+}
+.cart-details-wrapper .cart-details-header .ant-select-selection-item {
+  margin-top: 0px;
+} */
+.cart-details-wrapper .cart-details-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.cart-details-wrapper .cart-details-container .product-image-wrapper img {
+  height: 140px;
+  width: auto;
+}
+.cart-details-wrapper .product-details-wrapper {
+  margin-left: 20px !important;
+}
+
+.product-details-wrapper .product-title {
+  margin-bottom: 0px !important;
+  font-weight: 600;
+}
+.product-details-wrapper .product-author {
+  margin-bottom: 0px !important;
+  color: darkgray;
+}
+.cart-details-wrapper .product-price-wrapper {
+  margin-bottom: 20px;
+}
+.product-price-wrapper .discounted-price::before {
+  font-weight: 600;
+  margin-right: 1px;
+  color: black;
+  content: "₹";
+}
+.product-price-wrapper .discounted-price {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 0px;
+  color: black;
+}
+.product-price-wrapper .real-price {
+  font-size: 13px;
+  vertical-align: text-bottom;
+  font-weight: 400;
+  margin-left: 6px;
+  text-decoration: line-through;
+  color: darkgrey;
+}
+.product-price-wrapper .real-price::before {
+  content: "₹";
+}
+.cart-details-wrapper .product-quantity-wrapper {
+  margin-bottom: 10px;
+}
+.cart-details-wrapper .product-quantity-wrapper .ant-btn {
+  display: inline;
+  padding: 0px;
+}
+.cart-details-wrapper .product-quantity-wrapper .ant-input {
+  display: inline;
+  width: 40px;
+  margin-inline: 8px;
+}
+.cart-details-wrapper .product-quantity-wrapper .remove-button {
+  margin-left: 20px;
+  font-weight: 500;
+}
+/*  */
+
+.customer-details-wrapper .cart-details-header {
+  text-align: left;
+  margin-bottom: 30px;
+}
+.customer-details-wrapper .customer-details-form-container {
+  width: 65%;
+}
+.customer-details-wrapper .customer-details-form-container .form-row {
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.customer-details-wrapper
+  .customer-details-form-container
+  .form-row
+  .form-group {
+  width: 47.5%;
+}
+.customer-details-wrapper .customer-details-form-container .form-label {
+  margin-bottom: 0px;
+  font-size: 13px;
+}
+
+/*  */
+.order-summary-wrapper .order-summary-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.order-summary-wrapper .cart-details-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.order-summary-wrapper .order-summary-footer {
+  text-align: right;
+}
+.order-summary-wrapper .product-image-wrapper img {
+  height: 140px;
+  width: auto;
+}
+.order-summary-wrapper .product-details-wrapper {
+  margin-left: 20px !important;
+}
+
+.order-summary-wrapper .product-price-wrapper {
+  margin-bottom: 20px;
+}
+.product-price-wrapper .discounted-price::before {
+  font-weight: 600;
+  margin-right: 1px;
+  color: black;
+  content: "₹";
+}
+.product-price-wrapper .discounted-price {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 0px;
+  color: black;
+}
+.product-price-wrapper .real-price {
+  font-size: 13px;
+  vertical-align: text-bottom;
+  font-weight: 400;
+  margin-left: 6px;
+  text-decoration: line-through;
+  color: darkgrey;
+}
+.product-price-wrapper .real-price::before {
+  content: "₹";
+}
+
+/* MEDIA SCREEN */

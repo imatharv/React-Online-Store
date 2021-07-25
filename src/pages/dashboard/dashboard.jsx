@@ -1,56 +1,24 @@
 import "./dashboardStyles.css";
 import React, { useEffect } from "react";
+import { Switch, useHistory, Route } from "react-router-dom";
 import ProductService from "../../services/productService";
-import { Layout, Menu, Breadcrumb, Dropdown } from "antd";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import ProductCard from "../../components/productcard/productcard";
 import ProductDetails from "../../components/bookdetails/bookdetails";
+import CartPage from "../../components/cartPage/cartPage";
+import { Layout, Menu, Breadcrumb, Dropdown } from "antd";
 
 const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.antgroup.com"
-      >
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.aliyun.com"
-      >
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.luohanacademy.com"
-      >
-        3rd menu item
-      </a>
-    </Menu.Item>
-  </Menu>
-);
-
 export default function Dashboard() {
   const [data, setData] = React.useState([]);
-  console.log(data.length);
+  let history = useHistory();
+
   const getProducts = () => {
-    console.log("Get products API call");
-    // const token = window.sessionStorage.getItem("accessToken");
     Service.getProduct()
       .then((data) => {
         console.log(data.data.result);
-
         setData(data.data.result);
       })
       .catch((error) => {
@@ -60,6 +28,17 @@ export default function Dashboard() {
   useEffect(() => {
     getProducts();
   }, []);
+
+  const logout = () => {
+    sessionStorage.clear();
+    history.push("/account/login");
+  };
+  const handleClickNavigateToCart = () => {
+    history.push("/dashboard/cart");
+  };
+  const handleClickNavigateToHome = () => {
+    history.push("/dashboard");
+  };
   return (
     <Layout className="layout">
       <Header
@@ -73,7 +52,7 @@ export default function Dashboard() {
         }}
         style={{ position: "fixed", zIndex: 1, width: "100%" }}
       >
-        <div className="logo">
+        <div className="logo" onClick={handleClickNavigateToHome}>
           <img
             src="https://image.flaticon.com/icons/png/512/327/327116.png"
             alt="Logo"
@@ -120,14 +99,30 @@ export default function Dashboard() {
         </span>
         <Menu theme="dark" mode="horizontal">
           <Menu.Item>
-            <Dropdown overlay={menu} placement="bottomRight">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item onClick={logout}>Logout</Menu.Item>
+                </Menu>
+              }
+              placement="bottomRight"
+            >
               <div>
                 Profile <UserOutlined />
               </div>
             </Dropdown>
           </Menu.Item>
           <Menu.Item>
-            <Dropdown overlay={menu} placement="bottomRight">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item onClick={handleClickNavigateToCart}>
+                    Cart
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottomRight"
+            >
               <div>
                 Cart <ShoppingCartOutlined />
               </div>
@@ -136,20 +131,18 @@ export default function Dashboard() {
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px", marginTop: 50 }}>
-        <Breadcrumb
-          style={{ margin: "16px 0" }}
-          className="site-layout-heading"
-        >
-          <Breadcrumb.Item>
-            <h1>Books</h1>
-            <span className="product-count">{data.length}</span>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-        <div className="site-layout-content">
-          {/* <ProductCard data={data} /> */}
-          <ProductDetails data={data} />
-        </div>
+        <Switch>
+          <Route
+            exact
+            path="/dashboard"
+            component={() => <ProductCard data={data} />}
+          />
+          <Route path="/dashboard/product" component={ProductDetails} />
+          <Route path="/dashboard/cart" component={CartPage} />
+        </Switch>
+        {/* <CartPage /> */}
       </Content>
+
       <Footer style={{ textAlign: "center" }}>
         Copyright ©2020 Bookstore Private Limited. All rights Reserved.
       </Footer>

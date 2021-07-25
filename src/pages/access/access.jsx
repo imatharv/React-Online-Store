@@ -3,6 +3,7 @@ import { Row, Col, Tabs, Image, Card, Button } from "antd";
 import { Route } from "react-router-dom";
 import Signin from "../../components/signin/signin";
 import Signup from "../../components/signup/signup";
+import cardImage from "../../assets/images/access-card-image.png";
 
 const { TabPane } = Tabs;
 
@@ -26,8 +27,8 @@ export default function Access(props) {
               <div className="card-image-wrapper">
                 <Image
                   width={175}
-                  //src="../../assets/"
-                  src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A85534115-ba16-412e-b646-6dd43d839dd8&params=version%3A0&token=1627012407_da39a3ee_18004aa0ac18f190719c0e1638be002a9c8ae300&api_key=CometServer1"
+                  src={cardImage}
+                  //src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A85534115-ba16-412e-b646-6dd43d839dd8&params=version%3A0&token=1627012407_da39a3ee_18004aa0ac18f190719c0e1638be002a9c8ae300&api_key=CometServer1"
                 />
                 <p> Online book shopping</p>
               </div>
