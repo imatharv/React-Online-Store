@@ -1,5 +1,5 @@
 import "./cartpage.css";
-import { Input, Button, Tooltip, Form } from "antd";
+import { Input, Button, Tooltip, Form, InputNumber } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -12,11 +12,29 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 export default function CartPage() {
+  const [products, setProducts] = React.useState([{}]);
+  const [quantity, setQuantity] = React.useState(1);
+
+  const handleIncrement = () => {
+    if (quantity > 0 && quantity < 3) {
+      setQuantity((prevQuantity) => prevQuantity + 1);
+    }
+    //setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+    //setQuantity((prevQuantity) => prevQuantity - 1);
+  };
+
   const getCartData = () => {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getCartItems(token)
       .then((data) => {
-        console.log(data);
+        console.log(data.data.result);
+        setProducts(data.data.result);
+        console.log(products[0].product_id.author);
       })
       .catch((error) => {
         console.log(error);
@@ -75,11 +93,19 @@ export default function CartPage() {
             </div>
             <div className="product-quantity-wrapper">
               <Tooltip title="remove">
-                <Button shape="circle" icon={<MinusOutlined />} />
+                <Button
+                  shape="circle"
+                  onClick={handleDecrement}
+                  icon={<MinusOutlined />}
+                />
               </Tooltip>
-              <Input maxLength={3} />
+              <Input maxLength={3} value={quantity} />
               <Tooltip title="add more">
-                <Button shape="circle" icon={<PlusOutlined />} />
+                <Button
+                  shape="circle"
+                  onClick={handleIncrement}
+                  icon={<PlusOutlined />}
+                />
               </Tooltip>
               <Button className="remove-button" type="text">
                 Remove
