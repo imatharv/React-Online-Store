@@ -3,21 +3,21 @@ import { Divider, Input, Tag, Button, Avatar } from "antd";
 import { StarFilled, StarTwoTone } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Layout, Menu, Breadcrumb, Dropdown } from "antd";
+import { Layout } from "antd";
+import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const { TextArea } = Input;
 
-export default function BookDetails(props) {
+function BookDetails(props) {
   const [data, setData] = React.useState({});
   const location = useLocation();
   useEffect(() => {
     setData(location.state.data);
     console.log(location.state.data); // result: 'data array'
   }, [location]);
-
   const handleClickAddToCart = () => {
     const token = window.sessionStorage.getItem("accessToken");
     const product_id = data._id;
@@ -29,6 +29,10 @@ export default function BookDetails(props) {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleButtonClickEvent = () => {
+    props.dispatch({ type: "Cart" });
   };
 
   return (
@@ -63,7 +67,6 @@ export default function BookDetails(props) {
               <Button className="wishlist-btn">Wishlist</Button>
             </div>
           </div>
-
           <div className="product-details-container">
             <div className="product-details-wrapper">
               <h2 className="product-title">{data.bookName}</h2>
@@ -158,8 +161,20 @@ export default function BookDetails(props) {
               </div>
             </div>
           </div>
+
+          <Button
+            style={{ backgroundColor: "blue", color: "white" }}
+            onClick={handleButtonClickEvent}
+          >
+            button
+          </Button>
         </div>
       </Content>
     </React.Fragment>
   );
 }
+function mapStateToProps(state) {
+  console.log(state);
+  return { click: state.clicked };
+}
+export default connect(mapStateToProps)(BookDetails);

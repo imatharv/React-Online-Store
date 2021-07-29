@@ -6,7 +6,9 @@ import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import ProductCard from "../../components/productcard/productcard";
 import ProductDetails from "../../components/bookdetails/bookdetails";
 import CartPage from "../../components/cartPage/cartPage";
-import { Layout, Menu, Breadcrumb, Dropdown } from "antd";
+import WishlistPage from "../../components/wishlist/wishlist";
+import { Layout, Menu, Dropdown } from "antd";
+import store from "../../store/store";
 
 const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
@@ -14,6 +16,12 @@ const Service = new ProductService();
 export default function Dashboard() {
   const [data, setData] = React.useState([]);
   let history = useHistory();
+
+  store.subscribe(function () {
+    if (store.getState().clicked == "Cart") {
+      console.log(store.getState().clicked);
+    }
+  });
 
   const getProducts = () => {
     Service.getProduct()
@@ -25,8 +33,20 @@ export default function Dashboard() {
         console.log("Data fetch error: ", error);
       });
   };
+  // const getWishlistItems = () => {
+  //   const token = window.sessionStorage.getItem("accessToken");
+  //   Service.getWishlistItems(token)
+  //     .then((data) => {
+  //       console.log(data.data.result);
+  //       setProducts(data.data.result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   useEffect(() => {
     getProducts();
+    //getWishlistItems();
   }, []);
 
   const logout = () => {
@@ -35,6 +55,9 @@ export default function Dashboard() {
   };
   const handleClickNavigateToCart = () => {
     history.push("/dashboard/cart");
+  };
+  const handleClickNavigateToWishlist = () => {
+    history.push("/dashboard/wishlist");
   };
   const handleClickNavigateToHome = () => {
     history.push("/dashboard");
@@ -52,7 +75,11 @@ export default function Dashboard() {
         }}
         style={{ position: "fixed", zIndex: 1, width: "100%" }}
       >
-        <div className="logo" onClick={handleClickNavigateToHome}>
+        <div
+          className="logo"
+          onClick={handleClickNavigateToHome}
+          style={{ cursor: "pointer" }}
+        >
           <img
             src="https://image.flaticon.com/icons/png/512/327/327116.png"
             alt="Logo"
@@ -103,6 +130,9 @@ export default function Dashboard() {
               overlay={
                 <Menu>
                   <Menu.Item onClick={logout}>Logout</Menu.Item>
+                  <Menu.Item onClick={handleClickNavigateToWishlist}>
+                    Wishlist
+                  </Menu.Item>
                 </Menu>
               }
               placement="bottomRight"
@@ -139,6 +169,7 @@ export default function Dashboard() {
           />
           <Route path="/dashboard/product" component={ProductDetails} />
           <Route path="/dashboard/cart" component={CartPage} />
+          <Route path="/dashboard/wishlist" component={WishlistPage} />
         </Switch>
         {/* <CartPage /> */}
       </Content>

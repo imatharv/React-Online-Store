@@ -12,29 +12,76 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 export default function CartPage() {
-  const [products, setProducts] = React.useState([{}]);
-  const [quantity, setQuantity] = React.useState(1);
+  const [products, setProducts] = React.useState([]);
 
-  const handleIncrement = () => {
-    if (quantity > 0 && quantity < 3) {
-      setQuantity((prevQuantity) => prevQuantity + 1);
-    }
-    //setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-    //setQuantity((prevQuantity) => prevQuantity - 1);
-  };
+  const handleIncrement = (e, key) => {
+    e.preventDefault();
 
+    console.log("in increase qty api");
+    const token = window.sessionStorage.getItem("accessToken");
+    products.map((currentItem) => {
+      if (currentItem._id === key) {
+        if (currentItem.quantityToBuy > 0 && currentItem.quantityToBuy < 3) {
+          const cartItem_id = key;
+          let qty = currentItem.quantityToBuy + 1;
+          let data = {
+            quantityToBuy: qty,
+          };
+          Service.updateCartItemsQuantity(cartItem_id, data, token)
+            .then((data) => {
+              console.log(data);
+              getCartData();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    });
+  };
+  const handleDecrement = (e, key) => {
+    e.preventDefault();
+    console.log("in decrease qty api");
+    const token = window.sessionStorage.getItem("accessToken");
+    products.map((currentItem) => {
+      if (currentItem._id === key) {
+        if (currentItem.quantityToBuy > 1) {
+          const cartItem_id = key;
+          let qty = currentItem.quantityToBuy - 1;
+          let data = {
+            quantityToBuy: qty,
+          };
+          Service.updateCartItemsQuantity(cartItem_id, data, token)
+            .then((data) => {
+              console.log(data);
+              getCartData();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    });
+  };
+  const removeCartItem = (e, id) => {
+    e.preventDefault();
+    const token = window.sessionStorage.getItem("accessToken");
+    const cartItem_id = id;
+    Service.removeCartItem(cartItem_id, token)
+      .then((data) => {
+        console.log(data);
+        getCartData();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const getCartData = () => {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getCartItems(token)
       .then((data) => {
         console.log(data.data.result);
         setProducts(data.data.result);
-        console.log(products[0].product_id.author);
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +99,7 @@ export default function CartPage() {
       <div className="cart-details-wrapper">
         <div className="cart-details-header">
           <div>
-            <h4>My cart(1)</h4>
+            <h4>My cart({products.length})</h4>
           </div>
           <div>
             <Select
@@ -77,42 +124,52 @@ export default function CartPage() {
             </Select>
           </div>
         </div>
-        <div className="cart-details-container">
-          <div className="product-image-wrapper">
-            <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc.jpg?ts=1588152105"
-              alt=""
-            />
-          </div>
-          <div className="product-details-wrapper">
-            <h2 className="product-title">Product title</h2>
-            <h5 className="product-author">by Author Name</h5>
-            <div className="product-price-wrapper">
-              <span className="discounted-price">1000</span>
-              <span className="real-price">1200</span>
-            </div>
-            <div className="product-quantity-wrapper">
-              <Tooltip title="remove">
-                <Button
-                  shape="circle"
-                  onClick={handleDecrement}
-                  icon={<MinusOutlined />}
+        {products.map((data, index) => {
+          return (
+            <div className="cart-details-container" key={index}>
+              <div className="product-image-wrapper">
+                <img
+                  src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc.jpg?ts=1588152105"
+                  alt=""
                 />
-              </Tooltip>
-              <Input maxLength={3} value={quantity} />
-              <Tooltip title="add more">
-                <Button
-                  shape="circle"
-                  onClick={handleIncrement}
-                  icon={<PlusOutlined />}
-                />
-              </Tooltip>
-              <Button className="remove-button" type="text">
-                Remove
-              </Button>
+              </div>
+              <div className="product-details-wrapper">
+                <h2 className="product-title">{data.product_id.bookName}</h2>
+                <h5 className="product-author">by {data.product_id.author}</h5>
+                <div className="product-price-wrapper">
+                  <span className="discounted-price">
+                    {data.product_id.discountPrice}
+                  </span>
+                  <span className="real-price">{data.product_id.price}</span>
+                </div>
+                <div className="product-quantity-wrapper">
+                  <Tooltip title="decrerase">
+                    <Button
+                      shape="circle"
+                      onClick={(e) => handleDecrement(e, data._id)}
+                      icon={<MinusOutlined />}
+                    />
+                  </Tooltip>
+                  <Input maxLength={3} placeholder={data.quantityToBuy} />
+                  <Tooltip title="increase">
+                    <Button
+                      shape="circle"
+                      onClick={(e) => handleIncrement(e, data._id)}
+                      icon={<PlusOutlined />}
+                    />
+                  </Tooltip>
+                  <Button
+                    className="remove-button"
+                    type="text"
+                    onClick={(e) => removeCartItem(e, data._id)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
       <div className="customer-details-wrapper">
         <div className="cart-details-header">
@@ -219,22 +276,27 @@ export default function CartPage() {
             <h4>Order summary</h4>
           </div>
         </div>
-        <div className="cart-details-container">
-          <div className="product-image-wrapper">
-            <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc.jpg?ts=1588152105"
-              alt=""
-            />
-          </div>
-          <div className="product-details-wrapper">
-            <h2 className="product-title">Product title</h2>
-            <h5 className="product-author">by Author Name</h5>
-            <div className="product-price-wrapper">
-              <span className="discounted-price">1000</span>
-              <span className="real-price">1200</span>
+        {products.map((data) => {
+          return (
+            <div className="cart-details-container">
+              <div className="product-image-wrapper">
+                <img
+                  src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc.jpg?ts=1588152105"
+                  alt=""
+                />
+              </div>
+              <div className="product-details-wrapper">
+                <h2 className="product-title">Product title</h2>
+                <h5 className="product-author">by Author Name</h5>
+                <div className="product-price-wrapper">
+                  <span className="discounted-price">1000</span>
+                  <span className="real-price">1200</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
+
         <div className="order-summary-footer">
           <div>
             <Button>Checkout</Button>

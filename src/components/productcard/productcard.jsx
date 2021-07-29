@@ -1,8 +1,7 @@
 import React from "react";
 import { Card, Tag, Breadcrumb, Select } from "antd";
 import { StarFilled } from "@ant-design/icons";
-import { Route, useHistory } from "react-router-dom";
-import ProductDetails from "../bookdetails/bookdetails";
+import { useHistory } from "react-router-dom";
 import "./productcard.css";
 
 const { Meta } = Card;
@@ -44,7 +43,7 @@ export default function ProductCard(props) {
         </div>
       </div>
 
-      <div className="site-layout-content">
+      <div className="site-layout-content product-list">
         {props.data.map((data) => {
           return (
             <Card

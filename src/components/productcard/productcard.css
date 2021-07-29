@@ -8,7 +8,7 @@
 .action-bar .action-wrapper {
   padding-top: 10px;
 }
-.ant-card {
+.product-list .ant-card {
   margin: 10px !important;
   position: relative;
   border: 2px solid rgb(236, 236, 236);
@@ -26,16 +26,16 @@
   width: auto;
   align-self: center;
 }
-.ant-card-body {
+.product-list .ant-card-body {
   padding: 15px 25px;
 }
-.ant-card-meta {
+.product-list .ant-card-meta {
   margin-bottom: 3px;
 }
-.ant-card-meta-title {
+.product-list .ant-card-meta-title {
   margin-bottom: 0px !important;
 }
-.ant-card-meta-description {
+.product-list .ant-card-meta-description {
   font-size: 13px;
   font-weight: 500;
   margin-top: -1px !important;

@@ -41,6 +41,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-bottom: 20px;
 }
 .cart-details-wrapper .cart-details-container .product-image-wrapper img {
   height: 140px;
