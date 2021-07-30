@@ -7,7 +7,7 @@ import ProductCard from "../../components/productcard/productcard";
 import ProductDetails from "../../components/bookdetails/bookdetails";
 import CartPage from "../../components/cartPage/cartPage";
 import WishlistPage from "../../components/wishlist/wishlist";
-import { Layout, Menu, Dropdown } from "antd";
+import { Layout, Menu, Dropdown, Badge } from "antd";
 import store from "../../store/store";
 
 const { Header, Content, Footer } = Layout;
@@ -15,11 +15,22 @@ const Service = new ProductService();
 
 export default function Dashboard() {
   const [data, setData] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
+  const [cartItems, setcartItems] = React.useState([]);
   let history = useHistory();
 
   store.subscribe(function () {
-    console.log(store.getState().data);
-    setData(store.getState().data);
+    console.log(store.getState().cartItems);
+    // setcartItems(store.getState().cartItems);
+    // console.log(cartItems);
+    // console.log(store.getState().data); ---------
+    // if (store.getState().clicked == "bookClicked") {
+    //   console.log(store.getState().data);
+    //   setData(store.getState().data);
+    // } else if (store.getState().clicked == "totalCartItems") {
+    //   console.log(store.getState().cartItems );
+    //   setData(store.getState().cartItems);
+    // }
   });
 
   const getProducts = () => {
@@ -32,22 +43,32 @@ export default function Dashboard() {
         console.log("Data fetch error: ", error);
       });
   };
-  // const getWishlistItems = () => {
-  //   const token = window.sessionStorage.getItem("accessToken");
-  //   Service.getWishlistItems(token)
-  //     .then((data) => {
-  //       console.log(data.data.result);
-  //       setProducts(data.data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const getFeedback = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    Service.getCustomerFeedback()
+      .then((data) => {
+        console.log(data.data.result);
+        setData(data.data.result);
+      })
+      .catch((error) => {
+        console.log("Data fetch error: ", error);
+      });
+  };
+  const getWishlistItems = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    Service.getWishlistItems(token)
+      .then((data) => {
+        console.log(data.data.result);
+        setProducts(data.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
     getProducts();
-    //getWishlistItems();
+    getWishlistItems();
   }, []);
-
   const logout = () => {
     sessionStorage.clear();
     history.push("/account/login");
@@ -152,8 +173,18 @@ export default function Dashboard() {
               }
               placement="bottomRight"
             >
-              <div>
-                Cart <ShoppingCartOutlined />
+              <div className="cart-items-count">
+                <Badge count={5}>
+                  <div
+                    style={{
+                      borderRadius: "2px",
+                      display: "inline-block",
+                      verticalAlign: "middle",
+                    }}
+                  >
+                    Cart <ShoppingCartOutlined />
+                  </div>
+                </Badge>
               </div>
             </Dropdown>
           </Menu.Item>
@@ -168,9 +199,11 @@ export default function Dashboard() {
           />
           <Route path="/dashboard/product" component={ProductDetails} />
           <Route path="/dashboard/cart" component={CartPage} />
-          <Route path="/dashboard/wishlist" component={WishlistPage} />
+          <Route
+            path="/dashboard/wishlist"
+            component={() => <WishlistPage data={products} />}
+          />
         </Switch>
-        {/* <CartPage /> */}
       </Content>
 
       <Footer style={{ textAlign: "center" }}>

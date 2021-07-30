@@ -10,8 +10,8 @@ const Service = new ProductService();
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function WishlistPage() {
-  const [products, setProducts] = React.useState([]);
+export default function WishlistPage(props) {
+  //const [products, setProducts] = React.useState(props.data);
   const removeWishlistItem = (e, id) => {
     e.preventDefault();
     const token = window.sessionStorage.getItem("accessToken");
@@ -19,36 +19,36 @@ export default function WishlistPage() {
     Service.removeCartItem(cartItem_id, token)
       .then((data) => {
         console.log(data);
-        getWishlistItems();
+        // getWishlistItems();
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const getWishlistItems = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    Service.getWishlistItems(token)
-      .then((data) => {
-        console.log(data.data.result);
-        setProducts(data.data.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  useEffect(() => {
-    getWishlistItems();
-  }, []);
+  // const getWishlistItems = () => {
+  //   const token = window.sessionStorage.getItem("accessToken");
+  //   Service.getWishlistItems(token)
+  //     .then((data) => {
+  //       console.log(data.data.result);
+  //       setProducts(data.data.result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getWishlistItems();
+  // }, []);
   return (
     <div className="wishlist-layout-content">
       <div className="wishlist-details-wrapper">
         <div className="wishlist-details-header">
           <div>
-            <h3>My wishlist({products.length})</h3>
+            <h3>My wishlist({props.data.length})</h3>
           </div>
         </div>
 
-        {products.map((data, index) => {
+        {props.data.map((data, index) => {
           return (
             <div className="wishlist-product-wrapper">
               <div>

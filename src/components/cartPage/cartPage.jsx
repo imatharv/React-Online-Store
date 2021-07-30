@@ -1,17 +1,16 @@
 import "./cartpage.css";
-import { Input, Button, Tooltip, Form, InputNumber } from "antd";
+import { Input, Button, Tooltip, Form } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Layout, Breadcrumb, Select } from "antd";
+import { Breadcrumb, Select } from "antd";
+import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
-const { Content } = Layout;
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function CartPage() {
+function CartPage(props) {
   const [products, setProducts] = React.useState([]);
 
   const handleIncrement = (e, key) => {
@@ -80,7 +79,8 @@ export default function CartPage() {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getCartItems(token)
       .then((data) => {
-        console.log(data.data.result);
+        props.dispatch({ type: "totalCartItems", data: data });
+        // console.log(data.data.result);
         setProducts(data.data.result);
       })
       .catch((error) => {
@@ -306,3 +306,5 @@ export default function CartPage() {
     </div>
   );
 }
+
+export default connect()(CartPage);

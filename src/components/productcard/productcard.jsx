@@ -12,10 +12,7 @@ function ProductCard(props) {
   let history = useHistory();
   // const [productData, setProductData] = React.useState([]);
   const handleClickOpenProductDetails = (e, data) => {
-    let action = { type: "bookClicked", data: data };
     props.dispatch({ type: "bookClicked", data: data });
-    console.log("Asd");
-    console.log(props);
     console.log(data);
     history.push({
       pathname: "/dashboard/product",

@@ -70,6 +70,21 @@
   line-height: 50px;
   background: #a03037;
 }
+.ant-layout-header .cart-items-count .ant-badge {
+  color: unset !important;
+}
+.ant-layout-header .cart-items-count .ant-badge-count {
+  background-color: #faad14;
+  color: rgba(0, 0, 0, 0.85);
+  box-shadow: none;
+  font-weight: 500;
+  right: -5px !important;
+  min-width: 15px !important;
+  height: 15px !important;
+  line-height: 15px !important;
+  font-size: 10px !important;
+  padding: unset !important;
+}
 .ant-layout-footer {
   padding: 20px 50px;
   color: #dadada;

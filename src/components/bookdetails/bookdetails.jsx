@@ -11,7 +11,7 @@ const Service = new ProductService();
 const { Content } = Layout;
 const { TextArea } = Input;
 
-function BookDetails(props) {
+export default function BookDetails(props) {
   const [data, setData] = React.useState({});
   const location = useLocation();
   useEffect(() => {
@@ -31,9 +31,9 @@ function BookDetails(props) {
       });
   };
 
-  const handleButtonClickEvent = () => {
-    props.dispatch({ type: "Cart" });
-  };
+  // const handleButtonClickEvent = () => {
+  //   props.dispatch({ type: "Cart" });
+  // };
 
   return (
     <React.Fragment>
@@ -161,20 +161,21 @@ function BookDetails(props) {
               </div>
             </div>
           </div>
-
-          <Button
-            style={{ backgroundColor: "blue", color: "white" }}
-            onClick={handleButtonClickEvent}
-          >
-            button
-          </Button>
+          {/* 
+            <Button
+              style={{ backgroundColor: "blue", color: "white" }}
+              onClick={handleButtonClickEvent}
+            >
+              button
+            </Button> 
+          */}
         </div>
       </Content>
     </React.Fragment>
   );
 }
-function mapStateToProps(state) {
-  console.log(state);
-  return { click: state.clicked };
-}
-export default connect(mapStateToProps)(BookDetails);
+// function mapStateToProps(state) {
+//   console.log(state);
+//   return { click: state.clicked };
+// }
+// export default connect(mapStateToProps)(BookDetails);
