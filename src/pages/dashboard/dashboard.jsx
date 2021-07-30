@@ -18,9 +18,8 @@ export default function Dashboard() {
   let history = useHistory();
 
   store.subscribe(function () {
-    if (store.getState().clicked == "Cart") {
-      console.log(store.getState().clicked);
-    }
+    console.log(store.getState().data);
+    setData(store.getState().data);
   });
 
   const getProducts = () => {

@@ -2,16 +2,21 @@ import React from "react";
 import { Card, Tag, Breadcrumb, Select } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import "./productcard.css";
 
 const { Meta } = Card;
 const { Option } = Select;
 
-export default function ProductCard(props) {
+function ProductCard(props) {
   let history = useHistory();
   // const [productData, setProductData] = React.useState([]);
   const handleClickOpenProductDetails = (e, data) => {
-    e.preventDefault();
+    let action = { type: "bookClicked", data: data };
+    props.dispatch({ type: "bookClicked", data: data });
+    console.log("Asd");
+    console.log(props);
+    console.log(data);
     history.push({
       pathname: "/dashboard/product",
       state: { data: data },
@@ -75,3 +80,6 @@ export default function ProductCard(props) {
     </React.Fragment>
   );
 }
+
+export default connect()(ProductCard);
+//export default ProductCard;

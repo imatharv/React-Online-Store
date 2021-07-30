@@ -1,13 +1,14 @@
 const initialState = {
-    clicked : ""
+    data : []
 }
 
 function addToCartReducer(state=initialState, action) {
-    console.log(action);
+    console.log(action.type);
+    console.log(action.data);
     switch(action.type) {
-        case "Cart" : 
+        case "bookClicked" : 
             return {
-                clicked: "Cart"
+                data: action.data
             }
         default : 
             return state;
@@ -15,3 +16,17 @@ function addToCartReducer(state=initialState, action) {
 }
 
 export default addToCartReducer;
+
+// const initialState = {
+//     clicked : ""
+// }
+// function addToCartReducer(state=initialState, action) {
+//     switch(action.type) {
+//         case "Cart" : 
+//             return {
+//                 clicked: "Cart"
+//             }
+//         default : 
+//             return state;
+//     }
+// }
