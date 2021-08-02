@@ -29,6 +29,10 @@ export default class ProductService {
         return axios.getMethod(`${this.baseURL}bookstore_user​/get_wishlist_items`, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
     }
 
+    addWishlistItem = (product_id, token) => {
+        return axios.postMethod(`${this.baseURL}bookstore_user​/add_wish_list​/${product_id}`, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
+    }
+
     removeWishlistItem = (product_id, token) => {
         return axios.deleteMethod(`${this.baseURL}bookstore_user/remove_wishlist_item/${product_id}`, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
     }
@@ -41,4 +45,12 @@ export default class ProductService {
         return axios.postMethod(`${this.baseURL}bookstore_user/add/feedback/${product_id}`, data, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
     }
     
+    putCustomerDetails = (data, token) => {
+        return axios.putMethod(`${this.baseURL}bookstore_user​/edit_user`, data, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
+    }
+
+    addOrder = (data, token) => {
+        return axios.postMethod(`${this.baseURL}bookstore_user/add/order`, data, { headers: {"x-access-token" : token, "Content-Type": "application/json"} });
+    }
+
 }

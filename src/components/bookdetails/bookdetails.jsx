@@ -1,5 +1,5 @@
 import "./bookdetails.css";
-import { Divider, Input, Tag, Button, Avatar } from "antd";
+import { Divider, Input, Tag, Button, Avatar, Breadcrumb } from "antd";
 import { StarFilled, StarTwoTone } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -13,11 +13,21 @@ const { TextArea } = Input;
 
 export default function BookDetails(props) {
   const [data, setData] = React.useState({});
+  const [feedback, setFeedback] = React.useState([]);
+  const [comment, setComment] = React.useState("");
+  const [rating, setRating] = React.useState("");
   const location = useLocation();
   useEffect(() => {
     setData(location.state.data);
     console.log(location.state.data); // result: 'data array'
   }, [location]);
+
+  const handleCommentInput = (event) => {
+    setComment(event.target.value);
+  };
+  const handleRatingInput = (event) => {
+    setRating(event.target.value);
+  };
   const handleClickAddToCart = () => {
     const token = window.sessionStorage.getItem("accessToken");
     const product_id = data._id;
@@ -30,14 +40,64 @@ export default function BookDetails(props) {
         console.log(error);
       });
   };
-
-  // const handleButtonClickEvent = () => {
-  //   props.dispatch({ type: "Cart" });
-  // };
+  const handleClickAddToWishlist = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    const product_id = data._id;
+    Service.addWishlistItem(product_id, token)
+      .then((data) => {
+        console.log(data);
+        props.history.push("/dashboard/wishlist");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleClickGetCustomerFeedback = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    const product_id = data._id;
+    Service.postCustomerFeedback(product_id, token)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleClickAddCustomerFeedback = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    const product_id = data._id;
+    let feedbackData = {
+      comment: comment,
+      rating: rating,
+    };
+    Service.postCustomerFeedback(product_id, token, feedbackData)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <React.Fragment>
-      <Content style={{ padding: "0 50px", marginTop: 50 }}>
+      <div style={{ padding: "0 50px", marginTop: 25 }}>
+        <div
+          className="action-bar"
+          style={{ marginBottom: 25, fontWeight: 500 }}
+        >
+          <div className="title-wrapper">
+            <Breadcrumb
+              style={{ marginTop: "16px", marginBottom: "8px" }}
+              className="site-layout-heading"
+            >
+              <Breadcrumb.Item>
+                <a href="">Home</a>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>Book</Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+        </div>
         <div className="product-details-layout-content">
           <div className="flex-col">
             <div className="product-image-container">
@@ -64,7 +124,12 @@ export default function BookDetails(props) {
               >
                 Add to cart
               </Button>
-              <Button className="wishlist-btn">Wishlist</Button>
+              <Button
+                className="wishlist-btn"
+                onClick={handleClickAddToWishlist}
+              >
+                Wishlist
+              </Button>
             </div>
           </div>
           <div className="product-details-container">
@@ -87,22 +152,7 @@ export default function BookDetails(props) {
             <div className="product-details-wrapper">
               <ul className="product-details">
                 <li className="details-title">Book details</li>
-                <p>
-                  {data.description}
-                  {/* Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Necessitatibus ut sed similique natus. Eos deleniti
-                  voluptatibus, officia commodi sequi nobis quasi maxime soluta
-                  vel recusandae debitis incidunt ea magnam dolores sint porro,
-                  quibusdam quas non. Deserunt dolorem, fugiat dolorum aut
-                  facilis dicta a laboriosam iusto. Quod nulla, quia
-                  exercitationem reprehenderit magni libero earum mollitia ullam
-                  temporibus saepe corrupti esse, ducimus laudantium nobis
-                  suscipit qui corporis asperiores dolores molestiae fugiat
-                  assumenda facere voluptates. Eius labore quis exercitationem
-                  facere aspernatur perspiciatis ipsum. Illo ipsum maxime
-                  tenetur mollitia quae? Quia veritatis eos nisi unde optio aut,
-                  quis ad saepe ea nemo sequi natus! */}
-                </p>
+                <p>{data.description}</p>
               </ul>
             </div>
             <Divider className="product-details-divider" />
@@ -121,12 +171,18 @@ export default function BookDetails(props) {
                 </div>
                 <div className="feedback-text">
                   <TextArea
+                    onChange={handleCommentInput}
                     placeholder="Write your review.."
                     autoSize={{ minRows: 3, maxRows: 5 }}
                   />
                 </div>
                 <div className="feedback-submit">
-                  <Button type="primary">Submit</Button>
+                  <Button
+                    type="primary"
+                    onClick={handleClickAddCustomerFeedback}
+                  >
+                    Submit
+                  </Button>
                 </div>
               </div>
             </div>
@@ -170,7 +226,7 @@ export default function BookDetails(props) {
             </Button> 
           */}
         </div>
-      </Content>
+      </div>
     </React.Fragment>
   );
 }

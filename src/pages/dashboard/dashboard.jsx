@@ -1,5 +1,5 @@
 import "./dashboardStyles.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useSelector } from "react";
 import { Switch, useHistory, Route } from "react-router-dom";
 import ProductService from "../../services/productService";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -8,30 +8,37 @@ import ProductDetails from "../../components/bookdetails/bookdetails";
 import CartPage from "../../components/cartPage/cartPage";
 import WishlistPage from "../../components/wishlist/wishlist";
 import { Layout, Menu, Dropdown, Badge } from "antd";
+import { connect } from "react-redux";
 import store from "../../store/store";
 
 const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [data, setData] = React.useState([]);
   const [products, setProducts] = React.useState([]);
-  const [cartItems, setcartItems] = React.useState([]);
+  const [cartItems, setcartItems] = React.useState();
+  const [wishlistItems, setWishlistItems] = React.useState([]);
   let history = useHistory();
 
-  store.subscribe(function () {
-    console.log(store.getState().cartItems);
-    // setcartItems(store.getState().cartItems);
-    // console.log(cartItems);
-    // console.log(store.getState().data); ---------
-    // if (store.getState().clicked == "bookClicked") {
-    //   console.log(store.getState().data);
-    //   setData(store.getState().data);
-    // } else if (store.getState().clicked == "totalCartItems") {
-    //   console.log(store.getState().cartItems );
-    //   setData(store.getState().cartItems);
-    // }
-  });
+  // const getCartItems = () => {
+  //   const token = window.sessionStorage.getItem("accessToken");
+  //   Service.getCartItems(token)
+  //     .then((data) => {
+  //       props.dispatch({ type: "totalCartItems", data: data });
+  //       // console.log(data.data.result);
+  //       setProducts(data.data.result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // store.subscribe(function () {
+  //   //console.log(store.getState().cartItems);
+  //   //console.log(store.getState().data);
+  //   console.log(store.getState().cartItemsReducer.cartItems.data.result);
+  // });
 
   const getProducts = () => {
     Service.getProduct()
@@ -43,31 +50,19 @@ export default function Dashboard() {
         console.log("Data fetch error: ", error);
       });
   };
-  const getFeedback = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    Service.getCustomerFeedback()
-      .then((data) => {
-        console.log(data.data.result);
-        setData(data.data.result);
-      })
-      .catch((error) => {
-        console.log("Data fetch error: ", error);
-      });
-  };
-  const getWishlistItems = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    Service.getWishlistItems(token)
-      .then((data) => {
-        console.log(data.data.result);
-        setProducts(data.data.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getFeedback = () => {
+  //   const token = window.sessionStorage.getItem("accessToken");
+  //   Service.getCustomerFeedback(token)
+  //     .then((data) => {
+  //       console.log(data.data.result);
+  //       setData(data.data.result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   useEffect(() => {
     getProducts();
-    getWishlistItems();
   }, []);
   const logout = () => {
     sessionStorage.clear();
@@ -86,13 +81,13 @@ export default function Dashboard() {
     <Layout className="layout">
       <Header
         breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
+        //collapsedWidth="0"
+        // onBreakpoint={(broken) => {
+        //   console.log(broken);
+        // }}
+        // onCollapse={(collapsed, type) => {
+        //   console.log(collapsed, type);
+        // }}
         style={{ position: "fixed", zIndex: 1, width: "100%" }}
       >
         <div
@@ -106,11 +101,7 @@ export default function Dashboard() {
           />
           <h3>Bookstore</h3>
         </div>
-        {/* <Search placeholder="input search text" style={{ width: 400 }} /> */}
-        <span
-          className="ant-input-group-wrapper ant-input-search"
-          style={{ width: "400px" }}
-        >
+        <span className="ant-input-group-wrapper ant-input-search">
           <span className="ant-input-wrapper ant-input-group">
             <span className="ant-input-group-addon">
               <button
@@ -190,6 +181,7 @@ export default function Dashboard() {
           </Menu.Item>
         </Menu>
       </Header>
+
       <Content style={{ padding: "0 50px", marginTop: 50 }}>
         <Switch>
           <Route
@@ -201,7 +193,7 @@ export default function Dashboard() {
           <Route path="/dashboard/cart" component={CartPage} />
           <Route
             path="/dashboard/wishlist"
-            component={() => <WishlistPage data={products} />}
+            component={() => <WishlistPage data={wishlistItems} />}
           />
         </Switch>
       </Content>
@@ -212,3 +204,8 @@ export default function Dashboard() {
     </Layout>
   );
 }
+// function mapStateToProps(state) {
+//   console.log(state.cartItemsReducer.cartItems.data.result);
+//   return { cartItems: state.cartItemsReducer.cartItems.data.result };
+// }
+// export default connect(mapStateToProps)(Dashboard);

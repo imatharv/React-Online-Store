@@ -1,5 +1,6 @@
 const initialState = {
-    data : []
+    //data : []
+    clicked: ""
 }
 
 function getProductDetailsReducer(state=initialState, action) {
@@ -8,7 +9,8 @@ function getProductDetailsReducer(state=initialState, action) {
     switch(action.type) {
         case "bookClicked" : 
             return {
-                data: action.data
+                //data: action.data
+                clicked: "bookClicked"
             }
         default : 
             return state;
