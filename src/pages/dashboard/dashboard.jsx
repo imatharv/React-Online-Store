@@ -15,55 +15,76 @@ const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
 
 export default function Dashboard(props) {
-  const [data, setData] = React.useState([]);
+  //const [data, setData] = React.useState([]);
+
   const [products, setProducts] = React.useState([]);
+  const [filteredProducts, setFilteredProducts] = React.useState([]);
+  const [searchTerm, setSearchTerm] = React.useState("");
+
   const [cartItems, setcartItems] = React.useState();
-  const [wishlistItems, setWishlistItems] = React.useState([]);
   let history = useHistory();
 
-  // const getCartItems = () => {
-  //   const token = window.sessionStorage.getItem("accessToken");
-  //   Service.getCartItems(token)
-  //     .then((data) => {
-  //       props.dispatch({ type: "totalCartItems", data: data });
-  //       // console.log(data.data.result);
-  //       setProducts(data.data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const handleSearchInput = (e) => {
+    console.log(e.target.value);
+    setSearchTerm(e.target.value);
+    if (searchTerm.length >= 3) {
+      let productData = [];
+      Object.keys(products).map((i) => {
+        let key = i;
+        productData.push(products[key]);
+        const books = productData.filter((obj) => {
+          return obj.bookName.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        setFilteredProducts(books);
+      });
+    } else {
+      setFilteredProducts(products);
+    }
+  };
+
+  // const handleSearch = (event) => {
+  //   let text = event.target.value;
+  //   if (text.toString().length >= 1) {
+  //     let BookData = [];
+  //     let NewBooks = Object.keys(props.BookList).map((item) => {
+  //       let key = item;
+  //       BookData.push(props.BookList[key]);
+  //       const newBooks = BookData.filter((obj) => {
+  //         return obj.bookName.toLowerCase().includes(text.toLowerCase());
+  //       });
+  //       props.setFilterArray(newBooks);
   //     });
+  //
+  //
+  //   } else {
+  //     props.setFilterArray(BookData);
+  //   }
   // };
 
-  // store.subscribe(function () {
-  //   //console.log(store.getState().cartItems);
-  //   //console.log(store.getState().data);
-  //   console.log(store.getState().cartItemsReducer.cartItems.data.result);
+  // const filteredProducts = products.filter((product) => {
+  //   if (
+  //     product.tags.toLowerCase().includes(search) ||
+  //     product.title.toLowerCase().includes(search) ||
+  //     product.category.toLowerCase().includes(search)
+  //   ) {
+  //     return product;
+  //   }
   // });
 
   const getProducts = () => {
     Service.getProduct()
       .then((data) => {
         console.log(data.data.result);
-        setData(data.data.result);
+        setProducts(data.data.result);
       })
       .catch((error) => {
         console.log("Data fetch error: ", error);
       });
   };
-  // const getFeedback = () => {
-  //   const token = window.sessionStorage.getItem("accessToken");
-  //   Service.getCustomerFeedback(token)
-  //     .then((data) => {
-  //       console.log(data.data.result);
-  //       setData(data.data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  useEffect(() => {
-    getProducts();
-  }, []);
   const logout = () => {
     sessionStorage.clear();
     history.push("/account/login");
@@ -77,6 +98,7 @@ export default function Dashboard(props) {
   const handleClickNavigateToHome = () => {
     history.push("/dashboard");
   };
+
   return (
     <Layout className="layout">
       <Header
@@ -131,17 +153,22 @@ export default function Dashboard(props) {
               placeholder="input search text"
               className="ant-input"
               type="text"
-              value=""
+              onChange={handleSearchInput}
             />
           </span>
         </span>
         <Menu theme="dark" mode="horizontal">
-          <Menu.Item>
+          <Menu.Item key={"profile"}>
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item onClick={logout}>Logout</Menu.Item>
-                  <Menu.Item onClick={handleClickNavigateToWishlist}>
+                  <Menu.Item onClick={logout} key={"logout"}>
+                    Logout
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={handleClickNavigateToWishlist}
+                    key={"wishlist"}
+                  >
                     Wishlist
                   </Menu.Item>
                 </Menu>
@@ -153,11 +180,11 @@ export default function Dashboard(props) {
               </div>
             </Dropdown>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item key={"order"}>
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item onClick={handleClickNavigateToCart}>
+                  <Menu.Item onClick={handleClickNavigateToCart} key={"cart"}>
                     Cart
                   </Menu.Item>
                 </Menu>
@@ -187,14 +214,11 @@ export default function Dashboard(props) {
           <Route
             exact
             path="/dashboard"
-            component={() => <ProductCard data={data} />}
+            component={() => <ProductCard data={filteredProducts} />}
           />
           <Route path="/dashboard/product" component={ProductDetails} />
           <Route path="/dashboard/cart" component={CartPage} />
-          <Route
-            path="/dashboard/wishlist"
-            component={() => <WishlistPage data={wishlistItems} />}
-          />
+          <Route path="/dashboard/wishlist" component={WishlistPage} />
         </Switch>
       </Content>
 

@@ -17,10 +17,10 @@ export default function WishlistPage(props) {
     e.preventDefault();
     const token = window.sessionStorage.getItem("accessToken");
     const cartItem_id = id;
-    Service.removeCartItem(cartItem_id, token)
+    Service.removeWishlistItem(cartItem_id, token)
       .then((data) => {
         console.log(data);
-        // getWishlistItems();
+        getWishlistItems();
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +45,7 @@ export default function WishlistPage(props) {
       <div className="wishlist-details-wrapper">
         <div className="wishlist-details-header">
           <div>
-            <h3>My wishlist({props.data.length})</h3>
+            <h3>My wishlist({products.length})</h3>
           </div>
         </div>
         {/* {props.data.map((data, index) => { */}

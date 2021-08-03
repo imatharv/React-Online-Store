@@ -12,6 +12,8 @@ const { TextArea } = Input;
 
 function CartPage(props) {
   const [products, setProducts] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
+  // const [totalCartItems, setTotalCartItems] = React.useState("");
   const [fullName, setFullName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [address, setAddress] = React.useState("");
@@ -42,7 +44,7 @@ function CartPage(props) {
     e.preventDefault();
     console.log("in increase qty api");
     const token = window.sessionStorage.getItem("accessToken");
-    products.map((currentItem) => {
+    cartItems.map((currentItem) => {
       if (currentItem._id === key) {
         if (currentItem.quantityToBuy > 0 && currentItem.quantityToBuy < 3) {
           const cartItem_id = key;
@@ -66,7 +68,7 @@ function CartPage(props) {
     e.preventDefault();
     console.log("in decrease qty api");
     const token = window.sessionStorage.getItem("accessToken");
-    products.map((currentItem) => {
+    cartItems.map((currentItem) => {
       if (currentItem._id === key) {
         if (currentItem.quantityToBuy > 1) {
           const cartItem_id = key;
@@ -104,8 +106,8 @@ function CartPage(props) {
     Service.getCartItems(token)
       .then((data) => {
         props.dispatch({ type: "totalCartItems", data: data });
-        // console.log(data.data.result);
-        setProducts(data.data.result);
+        console.log(data.data.result);
+        //setCartItems(data.data.result);
       })
       .catch((error) => {
         console.log(error);
@@ -167,12 +169,12 @@ function CartPage(props) {
       const token = window.sessionStorage.getItem("accessToken");
 
       let orders = [];
-      for (let i = 0; i < products.length; i++) {
+      for (let i = 0; i < cartItems.length; i++) {
         let data = {
-          product_id: products[i]._id,
-          product_name: products[i].product_id.bookName,
-          product_quantity: products[i].quantityToBuy,
-          product_price: products[i].product_id.price,
+          product_id: cartItems[i]._id,
+          product_name: cartItems[i].product_id.bookName,
+          product_quantity: cartItems[i].quantityToBuy,
+          product_price: cartItems[i].product_id.price,
         };
         orders.push(data);
       }
@@ -191,9 +193,17 @@ function CartPage(props) {
       console.info("cust details :: empty data");
     }
   };
+
   useEffect(() => {
     getCartData();
   }, []);
+
+  useEffect(() => {
+    console.log(props.cartItems);
+    // setTotalCartItems(props.cartItems);
+    setCartItems(props.cartItems);
+  }, [props.cartItems]);
+
   return (
     <React.Fragment>
       <div className="cart-layout-content">
@@ -216,7 +226,7 @@ function CartPage(props) {
         <div className="cart-details-wrapper">
           <div className="cart-details-header">
             <div>
-              <h4>My cart({products.length})</h4>
+              <h4>My cart()</h4>
             </div>
             <div>
               <Select
@@ -241,7 +251,7 @@ function CartPage(props) {
               </Select>
             </div>
           </div>
-          {products.map((data, index) => {
+          {cartItems.map((data, index) => {
             return (
               <div className="cart-details-container" key={index}>
                 <div className="product-image-wrapper">
@@ -415,7 +425,7 @@ function CartPage(props) {
               <h4>Order summary</h4>
             </div>
           </div>
-          {products.map((data) => {
+          {cartItems.map((data) => {
             return (
               <div className="cart-details-container">
                 <div className="product-image-wrapper">
@@ -425,11 +435,15 @@ function CartPage(props) {
                   />
                 </div>
                 <div className="product-details-wrapper">
-                  <h2 className="product-title">Product title</h2>
-                  <h5 className="product-author">by Author Name</h5>
+                  <h2 className="product-title">{data.product_id.bookName}</h2>
+                  <h5 className="product-author">
+                    by {data.product_id.author}
+                  </h5>
                   <div className="product-price-wrapper">
-                    <span className="discounted-price">1000</span>
-                    <span className="real-price">1200</span>
+                    <span className="discounted-price">
+                      {data.product_id.discountPrice}
+                    </span>
+                    <span className="real-price">{data.product_id.price}</span>
                   </div>
                 </div>
               </div>

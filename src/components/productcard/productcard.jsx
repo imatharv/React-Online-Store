@@ -49,6 +49,7 @@ function ProductCard(props) {
         {props.data.map((data) => {
           return (
             <Card
+              key={data._id}
               onClick={(e) => handleClickOpenProductDetails(e, data)}
               className="product-card"
               cover={

@@ -12,21 +12,45 @@ const { Content } = Layout;
 const { TextArea } = Input;
 
 export default function BookDetails(props) {
+  // const ratingIcons = [
+  //   <StarTwoTone />,
+  //   <StarTwoTone />,
+  //   <StarTwoTone />,
+  //   <StarTwoTone />,
+  //   <StarTwoTone />,
+  // ];
   const [data, setData] = React.useState({});
   const [feedback, setFeedback] = React.useState([]);
   const [comment, setComment] = React.useState("");
   const [rating, setRating] = React.useState("");
   const location = useLocation();
   useEffect(() => {
+    handleClickGetCustomerFeedback();
+    // handleClickGetCustomerFeedback(product_id);
     setData(location.state.data);
     console.log(location.state.data); // result: 'data array'
   }, [location]);
-
+  const validate = () => {
+    let valid = true;
+    if (rating != 0) {
+      valid = true;
+    } else {
+      valid = false;
+    }
+    if (comment.length != 0) {
+      valid = true;
+    } else {
+      valid = false;
+    }
+    return valid;
+  };
   const handleCommentInput = (event) => {
     setComment(event.target.value);
   };
-  const handleRatingInput = (event) => {
-    setRating(event.target.value);
+  const handleRatingInput = (e, key) => {
+    e.preventDefault();
+    console.log(key);
+    setRating(key);
   };
   const handleClickAddToCart = () => {
     const token = window.sessionStorage.getItem("accessToken");
@@ -54,29 +78,35 @@ export default function BookDetails(props) {
   };
   const handleClickGetCustomerFeedback = () => {
     const token = window.sessionStorage.getItem("accessToken");
+    // const product_id = data._id || id;
     const product_id = data._id;
-    Service.postCustomerFeedback(product_id, token)
+    Service.getCustomerFeedback(product_id, token)
       .then((data) => {
         console.log(data);
+        setFeedback(data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
   const handleClickAddCustomerFeedback = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    const product_id = data._id;
-    let feedbackData = {
-      comment: comment,
-      rating: rating,
-    };
-    Service.postCustomerFeedback(product_id, token, feedbackData)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (validate()) {
+      const token = window.sessionStorage.getItem("accessToken");
+      const product_id = data._id;
+      let feedbackData = {
+        comment: comment,
+        rating: rating,
+      };
+      Service.postCustomerFeedback(product_id, token, feedbackData)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log("Empty feedback data");
+    }
   };
 
   return (
@@ -162,11 +192,36 @@ export default function BookDetails(props) {
                 <div className="feedback-ratings-wrapper">
                   <h5 className="ratings-title">Overall ratings</h5>
                   <div className="rating-icons">
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
+                    <StarTwoTone
+                      key={1}
+                      onClick={(e) => handleRatingInput(e, 1)}
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      key={2}
+                      onClick={(e) => handleRatingInput(e, 2)}
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      key={3}
+                      onClick={(e) => handleRatingInput(e, 3)}
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      key={4}
+                      onClick={(e) => handleRatingInput(e, 4)}
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      key={5}
+                      onClick={(e) => handleRatingInput(e, 5)}
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
                   </div>
                 </div>
                 <div className="feedback-text">
@@ -200,11 +255,26 @@ export default function BookDetails(props) {
                     <h5>Reviewer name</h5>
                   </div>
                   <div className="reviewer-ratings">
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
-                    <StarTwoTone />
+                    <StarTwoTone
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
+                    <StarTwoTone
+                      twoToneColor="#ffc107"
+                      style={{ marginRight: 3 }}
+                    />
                   </div>
                   <div className="review-details">
                     <p>
