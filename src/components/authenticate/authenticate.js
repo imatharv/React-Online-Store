@@ -8,7 +8,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
             render = {props => isAuthenticated() ? 
             ( <Component {...props} /> ) : 
             ( <Redirect 
-                to={{ pathname: "/account/login", state: { from: props.location } }} 
+                to={{ pathname: "/account/signin", state: { from: props.location } }} 
             /> ) 
         } />
     );

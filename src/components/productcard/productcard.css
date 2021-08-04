@@ -85,6 +85,13 @@
 .price-wrapper .real-price::before {
   content: "₹";
 }
+.pagination {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 /* MEDIA SCREEN */
 @media (max-width: 362.98px) {

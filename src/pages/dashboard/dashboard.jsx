@@ -29,15 +29,20 @@ export default function Dashboard(props) {
   }, []);
 
   const handleSearchInput = (e) => {
-    console.log(e.target.value);
     setSearchTerm(e.target.value);
+    if (searchTerm.length == "") {
+      setFilteredProducts(products);
+    }
     if (searchTerm.length >= 3) {
       let productData = [];
       Object.keys(products).map((i) => {
+        // creating array of number of objects in products
         let key = i;
-        productData.push(products[key]);
-        const books = productData.filter((obj) => {
-          return obj.bookName.toLowerCase().includes(searchTerm.toLowerCase());
+        productData.push(products[key]); //  pushing a perticular product at a perticular position...
+        const books = productData.filter((product) => {
+          return product.bookName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
         });
         setFilteredProducts(books);
       });
@@ -45,41 +50,15 @@ export default function Dashboard(props) {
       setFilteredProducts(products);
     }
   };
-
-  // const handleSearch = (event) => {
-  //   let text = event.target.value;
-  //   if (text.toString().length >= 1) {
-  //     let BookData = [];
-  //     let NewBooks = Object.keys(props.BookList).map((item) => {
-  //       let key = item;
-  //       BookData.push(props.BookList[key]);
-  //       const newBooks = BookData.filter((obj) => {
-  //         return obj.bookName.toLowerCase().includes(text.toLowerCase());
-  //       });
-  //       props.setFilterArray(newBooks);
-  //     });
-  //
-  //
-  //   } else {
-  //     props.setFilterArray(BookData);
-  //   }
-  // };
-
-  // const filteredProducts = products.filter((product) => {
-  //   if (
-  //     product.tags.toLowerCase().includes(search) ||
-  //     product.title.toLowerCase().includes(search) ||
-  //     product.category.toLowerCase().includes(search)
-  //   ) {
-  //     return product;
-  //   }
-  // });
-
   const getProducts = () => {
     Service.getProduct()
       .then((data) => {
+        //let arr = [];
+        //arr = data.data.result.slice(0, 8);
         console.log(data.data.result);
         setProducts(data.data.result);
+        //setFilteredProducts(arr);
+        setFilteredProducts(data.data.result);
       })
       .catch((error) => {
         console.log("Data fetch error: ", error);

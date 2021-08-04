@@ -11,9 +11,11 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 function CartPage(props) {
-  const [products, setProducts] = React.useState([]);
+  //const [products, setProducts] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
-  // const [totalCartItems, setTotalCartItems] = React.useState("");
+  const [addressDetails, setAddressDetails] = React.useState("block");
+  const [orderSummary, setOrderSummary] = React.useState("none");
+  const [totalCartItems, setTotalCartItems] = React.useState("");
   const [fullName, setFullName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [address, setAddress] = React.useState("");
@@ -155,6 +157,8 @@ function CartPage(props) {
       Service.putCustomerDetails(data, token)
         .then((data) => {
           console.log(data);
+          setOrderSummary("block");
+          setAddressDetails("none");
         })
         .catch((error) => {
           console.log(error);
@@ -200,7 +204,7 @@ function CartPage(props) {
 
   useEffect(() => {
     console.log(props.cartItems);
-    // setTotalCartItems(props.cartItems);
+    setTotalCartItems(props.cartItems.length);
     setCartItems(props.cartItems);
   }, [props.cartItems]);
 
@@ -226,7 +230,7 @@ function CartPage(props) {
         <div className="cart-details-wrapper">
           <div className="cart-details-header">
             <div>
-              <h4>My cart()</h4>
+              <h4>My cart({totalCartItems})</h4>
             </div>
             <div>
               <Select
@@ -300,7 +304,10 @@ function CartPage(props) {
             );
           })}
         </div>
-        <div className="customer-details-wrapper">
+        <div
+          className="customer-details-wrapper"
+          style={{ display: addressDetails }}
+        >
           <div className="cart-details-header">
             <div>
               <h4>Customer details</h4>
@@ -419,7 +426,10 @@ function CartPage(props) {
             </Form>
           </div>
         </div>
-        <div className="order-summary-wrapper">
+        <div
+          className="order-summary-wrapper"
+          style={{ display: orderSummary }}
+        >
           <div className="order-summary-header">
             <div>
               <h4>Order summary</h4>
