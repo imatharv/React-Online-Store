@@ -4,6 +4,7 @@
   background: #fff;
   /* margin: 50px 0px; */
   width: 70%;
+  min-height: 78.2vh;
   margin-top: 50px;
   margin-bottom: 10px;
   margin-inline: auto;
@@ -97,4 +98,14 @@
   margin-right: 1px;
   color: black;
   content: "₹";
+}
+
+@media (max-width: 575.98px) {
+  .wishlist-layout-content {
+    padding: 0px 24px 24px 24px;
+    background: #fff;
+    min-height: 79vh;
+    width: 100%;
+    margin-top: 25px;
+  }
 }

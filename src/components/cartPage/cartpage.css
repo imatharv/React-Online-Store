@@ -180,3 +180,13 @@
 }
 
 /* MEDIA SCREEN */
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .cart-layout-content {
+    background: #fff;
+    width: 100%;
+  }
+  .customer-details-wrapper .customer-details-form-container {
+    width: 100%;
+  }
+}

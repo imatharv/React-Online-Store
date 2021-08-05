@@ -130,3 +130,17 @@
 .signin-form {
   margin-top: 40px !important;
 }
+.form-card {
+  width: 300px;
+  height: 425px;
+}
+
+@media (max-width: 575.98px) {
+  .image-card-wrapper {
+    display: none !important;
+  }
+  .form-card {
+    width: 350;
+    height: 425px;
+  }
+}

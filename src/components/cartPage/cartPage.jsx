@@ -3,19 +3,17 @@ import { Input, Button, Tooltip, Form, Radio } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { Breadcrumb, Select } from "antd";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
 const { Option } = Select;
 const { TextArea } = Input;
 
-function CartPage(props) {
-  //const [products, setProducts] = React.useState([]);
+export default function CartPage(props) {
   const [cartItems, setCartItems] = React.useState([]);
   const [addressDetails, setAddressDetails] = React.useState("block");
   const [orderSummary, setOrderSummary] = React.useState("none");
-  const [totalCartItems, setTotalCartItems] = React.useState("");
   const [fullName, setFullName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [address, setAddress] = React.useState("");
@@ -44,7 +42,7 @@ function CartPage(props) {
 
   const handleIncrement = (e, key) => {
     e.preventDefault();
-    console.log("in increase qty api");
+    // console.log("in increase qty api");
     const token = window.sessionStorage.getItem("accessToken");
     cartItems.map((currentItem) => {
       if (currentItem._id === key) {
@@ -56,7 +54,7 @@ function CartPage(props) {
           };
           Service.updateCartItemsQuantity(cartItem_id, data, token)
             .then((data) => {
-              console.log(data);
+              // console.log(data);
               getCartData();
             })
             .catch((error) => {
@@ -68,7 +66,7 @@ function CartPage(props) {
   };
   const handleDecrement = (e, key) => {
     e.preventDefault();
-    console.log("in decrease qty api");
+    // console.log("in decrease qty api");
     const token = window.sessionStorage.getItem("accessToken");
     cartItems.map((currentItem) => {
       if (currentItem._id === key) {
@@ -80,7 +78,7 @@ function CartPage(props) {
           };
           Service.updateCartItemsQuantity(cartItem_id, data, token)
             .then((data) => {
-              console.log(data);
+              // console.log(data);
               getCartData();
             })
             .catch((error) => {
@@ -96,7 +94,6 @@ function CartPage(props) {
     const cartItem_id = id;
     Service.removeCartItem(cartItem_id, token)
       .then((data) => {
-        console.log(data);
         getCartData();
       })
       .catch((error) => {
@@ -107,9 +104,7 @@ function CartPage(props) {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getCartItems(token)
       .then((data) => {
-        props.dispatch({ type: "totalCartItems", data: data });
-        console.log(data.data.result);
-        //setCartItems(data.data.result);
+        setCartItems(data.data.result);
       })
       .catch((error) => {
         console.log(error);
@@ -156,7 +151,7 @@ function CartPage(props) {
       };
       Service.putCustomerDetails(data, token)
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setOrderSummary("block");
           setAddressDetails("none");
         })
@@ -188,7 +183,8 @@ function CartPage(props) {
       console.log(data);
       Service.addOrder(data, token)
         .then((data) => {
-          console.log(data);
+          // set data->order_id to variable for order_success page
+          // console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -202,11 +198,11 @@ function CartPage(props) {
     getCartData();
   }, []);
 
-  useEffect(() => {
-    console.log(props.cartItems);
-    setTotalCartItems(props.cartItems.length);
-    setCartItems(props.cartItems);
-  }, [props.cartItems]);
+  //  useEffect(() => {
+  //    console.log(props.cartItems);
+  //    setTotalCartItems(props.cartItems.length);
+  //    setCartItems(props.cartItems);
+  //  }, [props.cartItems]);
 
   return (
     <React.Fragment>
@@ -230,7 +226,7 @@ function CartPage(props) {
         <div className="cart-details-wrapper">
           <div className="cart-details-header">
             <div>
-              <h4>My cart({totalCartItems})</h4>
+              <h4>My cart({cartItems.length})</h4>
             </div>
             <div>
               <Select
@@ -470,8 +466,8 @@ function CartPage(props) {
     </React.Fragment>
   );
 }
-function mapStateToProps(state) {
-  console.log(state.cartItemsReducer.cartItems.data.result);
-  return { cartItems: state.cartItemsReducer.cartItems.data.result };
-}
-export default connect(mapStateToProps)(CartPage);
+// function mapStateToProps(state) {
+//   console.log(state.cartItemsReducer.cartItems.data.result);
+//   return { cartItems: state.cartItemsReducer.cartItems.data.result };
+// }
+// export default connect(mapStateToProps)(CartPage);

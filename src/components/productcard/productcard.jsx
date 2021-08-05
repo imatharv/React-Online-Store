@@ -1,18 +1,19 @@
 import React from "react";
-import { Card, Tag, Breadcrumb, Select, Pagination } from "antd";
+import { Card, Tag, Breadcrumb, Select } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import Pagination from "../pagination/pagination";
 
 import "./productcard.css";
 
 const { Meta } = Card;
 const { Option } = Select;
 
-function ProductCard(props) {
+export default function ProductCard(props) {
   let history = useHistory();
   const [booksData, setBooksData] = React.useState(props.data);
-  const [sortType, setSortType] = React.useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [postsPerPage] = React.useState(10);
 
   const handleSortChange = (e, value) => {
     // setSortType(e.target.value);
@@ -47,13 +48,24 @@ function ProductCard(props) {
     setBooksData(sortedPriceDesc);
   };
   const handleClickOpenProductDetails = (e, data) => {
-    props.dispatch({ type: "bookClicked", data: data });
+    //props.dispatch({ type: "bookClicked", data: data });
     console.log(data);
     history.push({
       pathname: "/dashboard/product",
       state: { data: data },
     });
   };
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = booksData.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Chnage page
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <React.Fragment>
       <div className="action-bar">
@@ -78,7 +90,7 @@ function ProductCard(props) {
       </div>
 
       <div className="site-layout-content product-list">
-        {booksData.map((data) => {
+        {currentPosts.map((data) => {
           return (
             <Card
               key={data._id}
@@ -109,11 +121,15 @@ function ProductCard(props) {
       </div>
 
       <div className="pagination">
-        <Pagination pageSize={6} total={booksData.length} />
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={booksData.length}
+          paginate={paginate}
+        />
       </div>
     </React.Fragment>
   );
 }
 
-export default connect()(ProductCard);
+//connect()(ProductCard);
 //export default ProductCard;

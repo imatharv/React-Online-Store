@@ -14,4 +14,16 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
     );
 };
 
-export default ProtectedRoute;
+const AuthenticatedRoute = ({component: Component, ...rest}) => {
+    return (
+        <Route {...rest} 
+            render = {props => isAuthenticated() ? 
+            ( <Component {...props} /> ) : 
+            ( <Redirect 
+                to={{ pathname: "/account/signin", state: { from: props.location } }} 
+            /> ) 
+        } />
+    );
+};
+
+export {ProtectedRoute, AuthenticatedRoute};

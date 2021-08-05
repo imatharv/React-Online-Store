@@ -35,7 +35,7 @@ export default function Access(props) {
             </Card>
           </Col>
           <Col span={6} className="sign-card-wrapper">
-            <Card style={{ width: 300, height: 425 }} className="form-card">
+            <Card className="form-card">
               <div className="sign-form-wrapper">
                 {/* <Row
                   className="action-button-wrapper"

@@ -127,7 +127,7 @@ export default function Signup(props) {
             onClick={register}
             block
           >
-            Login
+            Signup
           </Button>
         </Form.Item>
       </Form>

@@ -3,24 +3,17 @@ import { Divider, Input, Tag, Button, Avatar, Breadcrumb } from "antd";
 import { StarFilled, StarTwoTone } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Layout } from "antd";
-import { connect } from "react-redux";
+// import { Layout } from "antd";
+// import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
-const { Content } = Layout;
+// const { Content } = Layout;
 const { TextArea } = Input;
 
 export default function BookDetails(props) {
-  // const ratingIcons = [
-  //   <StarTwoTone />,
-  //   <StarTwoTone />,
-  //   <StarTwoTone />,
-  //   <StarTwoTone />,
-  //   <StarTwoTone />,
-  // ];
   const [data, setData] = React.useState({});
-  const [feedback, setFeedback] = React.useState([]);
+  //  const [feedback, setFeedback] = React.useState([]);
   const [comment, setComment] = React.useState("");
   const [rating, setRating] = React.useState("");
   const location = useLocation();
@@ -64,7 +57,8 @@ export default function BookDetails(props) {
         console.log(error);
       });
   };
-  const handleClickAddToWishlist = () => {
+  const handleClickAddToWishlist = (e) => {
+    e.preventDefault();
     const token = window.sessionStorage.getItem("accessToken");
     const product_id = data._id;
     Service.addWishlistItem(product_id, token)
@@ -83,7 +77,7 @@ export default function BookDetails(props) {
     Service.getCustomerFeedback(product_id, token)
       .then((data) => {
         console.log(data);
-        setFeedback(data);
+        //setFeedback(data);
       })
       .catch((error) => {
         console.log(error);
@@ -111,10 +105,10 @@ export default function BookDetails(props) {
 
   return (
     <React.Fragment>
-      <div style={{ padding: "0 50px", marginTop: 25 }}>
+      <div style={{ padding: "0 10px", marginTop: 10 }}>
         <div
           className="action-bar"
-          style={{ marginBottom: 25, fontWeight: 500 }}
+          style={{ marginBottom: 10, fontWeight: 500 }}
         >
           <div className="title-wrapper">
             <Breadcrumb
@@ -155,6 +149,7 @@ export default function BookDetails(props) {
                 Add to cart
               </Button>
               <Button
+                id="wishlist-btn"
                 className="wishlist-btn"
                 onClick={handleClickAddToWishlist}
               >
