@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Form, Input, Button, Divider } from "antd";
 import "./signinStyles.css";
 import UserService from "../../services/userService";
+import { useHistory } from "react-router";
 const Service = new UserService();
 
 export default function Signin(props) {
@@ -9,7 +10,7 @@ export default function Signin(props) {
   const [password, setPassword] = React.useState("");
   const [emailErrorMsg, setEmailErrorMsg] = React.useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = React.useState("");
-
+  const history = useHistory();
   const handleEmailInputChange = (event) => {
     setEmail(event.target.value);
   };
@@ -34,6 +35,7 @@ export default function Signin(props) {
     }
     return valid;
   };
+
   const login = () => {
     if (validate()) {
       let data = {
@@ -46,7 +48,8 @@ export default function Signin(props) {
             "accessToken",
             data.data.result.accessToken
           );
-          props.history.push("/dashboard");
+          console.log(props);
+          history.push("/dashboard");
         })
         .catch((error) => {
           console.log(error);

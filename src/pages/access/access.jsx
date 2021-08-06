@@ -12,10 +12,10 @@ export default function Access(props) {
     // console.log(key);
   }
   const navigateToSignin = () => {
-    props.history.push("/account/signin");
+    // props.history.push("/account/signin");
   };
   const navigateToSignup = () => {
-    props.history.push("/account/signup");
+    // props.history.push("/account/signup");
   };
 
   return (
@@ -50,7 +50,6 @@ export default function Access(props) {
                           type="link"
                           size="large"
                           className="signin-button"
-                          onClick={navigateToSignin}
                         >
                           Login
                         </Button>
@@ -59,7 +58,10 @@ export default function Access(props) {
                     }
                     key="1"
                   >
-                    <Route exact path="/account/signin" component={Signin} />
+                    <div className="signin">
+                      <Signin />
+                    </div>
+                    {/* <Route exact path="/account/signin" component={Signin} /> */}
                   </TabPane>
                   <TabPane
                     tab={
@@ -68,7 +70,6 @@ export default function Access(props) {
                           type="link"
                           size="large"
                           className="signup-button"
-                          onClick={navigateToSignup}
                         >
                           Signup
                         </Button>
@@ -77,9 +78,13 @@ export default function Access(props) {
                     }
                     key="2"
                   >
-                    <Route exact path="/account/signup" component={Signup} />
+                    <div className="signup">
+                      <Signup />
+                    </div>
+                    {/* <Route exact path="/account/signup" component={Signup} /> */}
                   </TabPane>
                 </Tabs>
+
                 {/* </Row> */}
                 {/* Calling either component */}
                 {/* <Route exact path="/app/signup" component={Signup} /> */}

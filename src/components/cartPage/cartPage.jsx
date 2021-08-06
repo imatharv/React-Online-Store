@@ -14,6 +14,8 @@ export default function CartPage(props) {
   const [cartItems, setCartItems] = React.useState([]);
   const [addressDetails, setAddressDetails] = React.useState("block");
   const [orderSummary, setOrderSummary] = React.useState("none");
+  const [customerDetailsSubmit, setCustomerDetailsSubmit] =
+    React.useState("false");
   const [fullName, setFullName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [address, setAddress] = React.useState("");
@@ -39,7 +41,6 @@ export default function CartPage(props) {
   const handleAddressTypeInput = (event) => {
     setAddressType(event.target.value);
   };
-
   const handleIncrement = (e, key) => {
     e.preventDefault();
     // console.log("in increase qty api");
@@ -151,9 +152,9 @@ export default function CartPage(props) {
       };
       Service.putCustomerDetails(data, token)
         .then((data) => {
-          // console.log(data);
           setOrderSummary("block");
-          setAddressDetails("none");
+          setAddressDetails("block");
+          setCustomerDetailsSubmit("true");
         })
         .catch((error) => {
           console.log(error);
@@ -417,7 +418,13 @@ export default function CartPage(props) {
                 </Form.Item>
               </div>
               <div className="form-row-complete" style={{ textAlign: "right" }}>
-                <Button onClick={customerDetails}>Continue</Button>
+                <Button
+                  onClick={customerDetails}
+                  className="customer-details-submit"
+                  style={{ disabled: customerDetailsSubmit }}
+                >
+                  Continue
+                </Button>
               </div>
             </Form>
           </div>

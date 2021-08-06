@@ -14,8 +14,8 @@ function App() {
         <Provider store={store}>
           <BrowserRouter>
             <Switch>
-              <Route path = "/account/signin" component = {Access} />
-              <ProtectedRoute  path = "/" component = {Dashboard} />
+              <Route exact path = "/account/signin" component = {Access} />
+              {/* <ProtectedRoute  path = "/" component = {Dashboard} /> */}
               <ProtectedRoute  path = "/dashboard" component = {Dashboard} />
               {/* <AuthenticatedRoute  path = "/" component = {Dashboard} /> */}
             </Switch>
