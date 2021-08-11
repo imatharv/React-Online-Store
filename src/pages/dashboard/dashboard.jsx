@@ -7,16 +7,15 @@ import ProductCard from "../../components/productcard/productcard";
 import ProductDetails from "../../components/bookdetails/bookdetails";
 import CartPage from "../../components/cartPage/cartPage";
 import WishlistPage from "../../components/wishlist/wishlist";
+import OrderDetails from "../../components/orderDetails/orderDetails";
 import { Layout, Menu, Dropdown, Badge } from "antd";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 // import store from "../../store/store";
 
 const { Header, Content, Footer } = Layout;
 const Service = new ProductService();
 
-export default function Dashboard(props) {
-  //const [data, setData] = React.useState([]);
-
+function Dashboard(props) {
   const [products, setProducts] = React.useState([]);
   const [filteredProducts, setFilteredProducts] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -27,8 +26,7 @@ export default function Dashboard(props) {
   useEffect(() => {
     getProducts();
     getCartData();
-    console.log("Dashboard loading");
-  }, [cartItemsCount]);
+  }, [props]);
 
   const handleSearchInput = (e) => {
     setSearchTerm(e.target.value);
@@ -66,7 +64,6 @@ export default function Dashboard(props) {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getCartItems(token)
       .then((data) => {
-        console.log("asdadasdadadasd");
         setCartItemsCount(data.data.result.length);
       })
       .catch((error) => {
@@ -86,26 +83,10 @@ export default function Dashboard(props) {
   const handleClickNavigateToHome = () => {
     history.push("/dashboard");
   };
-  const dummyFunction = () => {
-    console.log("dummy function");
-  };
-  const onDummyButtonClick = () => {
-    dummyFunction();
-  };
 
   return (
     <Layout className="layout">
-      <Header
-        breakpoint="lg"
-        //collapsedWidth="0"
-        // onBreakpoint={(broken) => {
-        //   console.log(broken);
-        // }}
-        // onCollapse={(collapsed, type) => {
-        //   console.log(collapsed, type);
-        // }}
-        style={{ position: "fixed", zIndex: 1, width: "100%" }}
-      >
+      <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
         <div
           className="logo"
           onClick={handleClickNavigateToHome}
@@ -213,6 +194,7 @@ export default function Dashboard(props) {
           <Route path="/dashboard/product" component={ProductDetails} />
           <Route path="/dashboard/cart" component={CartPage} />
           <Route path="/dashboard/wishlist" component={WishlistPage} />
+          <Route path="/dashboard/order" component={OrderDetails} />
         </Switch>
       </Content>
 
@@ -223,8 +205,8 @@ export default function Dashboard(props) {
   );
 }
 
-// function mapStateToProps(state) {
-//   console.log(state.cartItems);
-//   return { cartItems: state.cartItemsReducer.cartItems.data };
-// }
-// export default connect(mapStateToProps)(Dashboard);
+function mapStateToProps(state) {
+  //console.log(state.cartItemsReducer.clicked);
+  return { cartItems: state.cartItemsReducer.clicked };
+}
+export default connect(mapStateToProps)(Dashboard);

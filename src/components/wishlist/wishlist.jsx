@@ -5,12 +5,13 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Layout, Breadcrumb, Select } from "antd";
 import ProductService from "../../services/productService";
+import { connect } from "react-redux";
 
 const Service = new ProductService();
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function WishlistPage(props) {
+function WishlistPage(props) {
   //const [products, setProducts] = React.useState(props.data);
   const [products, setProducts] = React.useState([]);
   const removeWishlistItem = (e, id) => {
@@ -30,8 +31,21 @@ export default function WishlistPage(props) {
     const token = window.sessionStorage.getItem("accessToken");
     Service.getWishlistItems(token)
       .then((data) => {
-        console.log(data.data.result);
         setProducts(data.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleClickAddToCart = (e, id) => {
+    e.preventDefault();
+    const token = window.sessionStorage.getItem("accessToken");
+    const product_id = id;
+    Service.addToCart(product_id, token)
+      .then((data) => {
+        console.log(data);
+        props.dispatch({ type: "addToCartClicked", data: data });
+        props.history.push("/dashboard/cart");
       })
       .catch((error) => {
         console.log(error);
@@ -61,9 +75,9 @@ export default function WishlistPage(props) {
                     />
                   </div>
                   <div className="product-details-wrapper">
-                    <h3 className="product-title">
+                    <h2 className="product-title">
                       {data.product_id.bookName}
-                    </h3>
+                    </h2>
                     <h5 className="product-author">
                       by {data.product_id.author}
                     </h5>
@@ -75,6 +89,15 @@ export default function WishlistPage(props) {
                         {data.product_id.price}
                       </span>
                     </div>
+                    <Button
+                      className="addToCart-btn"
+                      size="small"
+                      onClick={(e) =>
+                        handleClickAddToCart(e, data.product_id._id)
+                      }
+                    >
+                      Add to cart
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -91,3 +114,5 @@ export default function WishlistPage(props) {
     </div>
   );
 }
+
+export default connect()(WishlistPage);

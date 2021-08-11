@@ -49,7 +49,6 @@ export default function ProductCard(props) {
   };
   const handleClickOpenProductDetails = (e, data) => {
     //props.dispatch({ type: "bookClicked", data: data });
-    console.log(data);
     history.push({
       pathname: "/dashboard/product",
       state: { data: data },

@@ -2,26 +2,28 @@ import "./cartpage.css";
 import { Input, Button, Tooltip, Form, Radio } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Breadcrumb, Select } from "antd";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function CartPage(props) {
+function CartPage(props) {
   const [cartItems, setCartItems] = React.useState([]);
   const [addressDetails, setAddressDetails] = React.useState("block");
   const [orderSummary, setOrderSummary] = React.useState("none");
   const [customerDetailsSubmit, setCustomerDetailsSubmit] =
-    React.useState("false");
+    React.useState("block");
   const [fullName, setFullName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");
   const [state, setState] = React.useState("");
   const [addressType, setAddressType] = React.useState("");
+  let history = useHistory();
 
   const handleFullNameInput = (event) => {
     setFullName(event.target.value);
@@ -95,6 +97,7 @@ export default function CartPage(props) {
     const cartItem_id = id;
     Service.removeCartItem(cartItem_id, token)
       .then((data) => {
+        props.dispatch({ type: "removeFromCartClicked", data: data });
         getCartData();
       })
       .catch((error) => {
@@ -154,7 +157,7 @@ export default function CartPage(props) {
         .then((data) => {
           setOrderSummary("block");
           setAddressDetails("block");
-          setCustomerDetailsSubmit("true");
+          setCustomerDetailsSubmit("none");
         })
         .catch((error) => {
           console.log(error);
@@ -167,7 +170,6 @@ export default function CartPage(props) {
     if (validate()) {
       console.log("add order api call");
       const token = window.sessionStorage.getItem("accessToken");
-
       let orders = [];
       for (let i = 0; i < cartItems.length; i++) {
         let data = {
@@ -184,8 +186,11 @@ export default function CartPage(props) {
       console.log(data);
       Service.addOrder(data, token)
         .then((data) => {
-          // set data->order_id to variable for order_success page
-          // console.log(data);
+          console.log(props);
+          props.history.push({
+            pathname: "/dashboard/order",
+            // state: { data: data },
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -311,12 +316,7 @@ export default function CartPage(props) {
             </div>
           </div>
           <div className="customer-details-form-container">
-            <Form
-              //   form={form}
-              //   name="register"
-              //   onFinish={onFinish}
-              scrollToFirstError
-            >
+            <Form scrollToFirstError>
               <div className="form-row">
                 <div className="form-group">
                   <label>Full name</label>
@@ -421,7 +421,7 @@ export default function CartPage(props) {
                 <Button
                   onClick={customerDetails}
                   className="customer-details-submit"
-                  style={{ disabled: customerDetailsSubmit }}
+                  style={{ display: customerDetailsSubmit }}
                 >
                   Continue
                 </Button>
@@ -473,8 +473,8 @@ export default function CartPage(props) {
     </React.Fragment>
   );
 }
-// function mapStateToProps(state) {
-//   console.log(state.cartItemsReducer.cartItems.data.result);
-//   return { cartItems: state.cartItemsReducer.cartItems.data.result };
-// }
-// export default connect(mapStateToProps)(CartPage);
+function mapStateToProps(state) {
+  console.log(state.cartItemsReducer.clicked);
+  //return { cartItems: state.cartItemsReducer.clicked };
+}
+export default connect(mapStateToProps)(CartPage);

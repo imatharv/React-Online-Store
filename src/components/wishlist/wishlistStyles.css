@@ -55,7 +55,7 @@
   .wishlist-details-container
   .product-image-wrapper
   img {
-  height: 71px;
+  height: 115px;
   width: auto;
 }
 .wishlist-details-wrapper .product-details-wrapper {
@@ -70,6 +70,9 @@
   margin-bottom: 0px !important;
   color: darkgray;
 }
+.wishlist-details-wrapper .product-price-wrapper {
+  margin-bottom: 6px !important;
+}
 .product-price-wrapper .discounted-price::before {
   font-weight: 600;
   margin-right: 1px;
@@ -77,13 +80,13 @@
   content: "₹";
 }
 .product-price-wrapper .discounted-price {
-  font-size: 16px;
+  /* font-size: 16px; */
   font-weight: 600;
   margin-left: 0px;
   color: black;
 }
 .product-price-wrapper .real-price {
-  font-size: 13px;
+  /* font-size: 13px; */
   vertical-align: text-bottom;
   font-weight: 400;
   margin-left: 6px;

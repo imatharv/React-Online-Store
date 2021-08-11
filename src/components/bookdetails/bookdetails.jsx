@@ -3,54 +3,26 @@ import { Divider, Input, Tag, Button, Avatar, Breadcrumb } from "antd";
 import { StarFilled, StarTwoTone } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-// import { Layout } from "antd";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import ProductService from "../../services/productService";
 
 const Service = new ProductService();
-// const { Content } = Layout;
 const { TextArea } = Input;
 
-export default function BookDetails(props) {
+function BookDetails(props) {
   const [data, setData] = React.useState({});
-  //  const [feedback, setFeedback] = React.useState([]);
-  const [comment, setComment] = React.useState("");
-  const [rating, setRating] = React.useState("");
   const location = useLocation();
+
   useEffect(() => {
-    handleClickGetCustomerFeedback();
-    // handleClickGetCustomerFeedback(product_id);
     setData(location.state.data);
-    console.log(location.state.data); // result: 'data array'
   }, [location]);
-  const validate = () => {
-    let valid = true;
-    if (rating != 0) {
-      valid = true;
-    } else {
-      valid = false;
-    }
-    if (comment.length != 0) {
-      valid = true;
-    } else {
-      valid = false;
-    }
-    return valid;
-  };
-  const handleCommentInput = (event) => {
-    setComment(event.target.value);
-  };
-  const handleRatingInput = (e, key) => {
-    e.preventDefault();
-    console.log(key);
-    setRating(key);
-  };
+
   const handleClickAddToCart = () => {
     const token = window.sessionStorage.getItem("accessToken");
     const product_id = data._id;
     Service.addToCart(product_id, token)
       .then((data) => {
-        console.log(data);
+        props.dispatch({ type: "addToCartClicked", data: data });
         props.history.push("/dashboard/cart");
       })
       .catch((error) => {
@@ -69,38 +41,6 @@ export default function BookDetails(props) {
       .catch((error) => {
         console.log(error);
       });
-  };
-  const handleClickGetCustomerFeedback = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    // const product_id = data._id || id;
-    const product_id = data._id;
-    Service.getCustomerFeedback(product_id, token)
-      .then((data) => {
-        console.log(data);
-        //setFeedback(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const handleClickAddCustomerFeedback = () => {
-    if (validate()) {
-      const token = window.sessionStorage.getItem("accessToken");
-      const product_id = data._id;
-      let feedbackData = {
-        comment: comment,
-        rating: rating,
-      };
-      Service.postCustomerFeedback(product_id, token, feedbackData)
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      console.log("Empty feedback data");
-    }
   };
 
   return (
@@ -189,31 +129,26 @@ export default function BookDetails(props) {
                   <div className="rating-icons">
                     <StarTwoTone
                       key={1}
-                      onClick={(e) => handleRatingInput(e, 1)}
                       twoToneColor="#ffc107"
                       style={{ marginRight: 3 }}
                     />
                     <StarTwoTone
                       key={2}
-                      onClick={(e) => handleRatingInput(e, 2)}
                       twoToneColor="#ffc107"
                       style={{ marginRight: 3 }}
                     />
                     <StarTwoTone
                       key={3}
-                      onClick={(e) => handleRatingInput(e, 3)}
                       twoToneColor="#ffc107"
                       style={{ marginRight: 3 }}
                     />
                     <StarTwoTone
                       key={4}
-                      onClick={(e) => handleRatingInput(e, 4)}
                       twoToneColor="#ffc107"
                       style={{ marginRight: 3 }}
                     />
                     <StarTwoTone
                       key={5}
-                      onClick={(e) => handleRatingInput(e, 5)}
                       twoToneColor="#ffc107"
                       style={{ marginRight: 3 }}
                     />
@@ -221,18 +156,12 @@ export default function BookDetails(props) {
                 </div>
                 <div className="feedback-text">
                   <TextArea
-                    onChange={handleCommentInput}
                     placeholder="Write your review.."
                     autoSize={{ minRows: 3, maxRows: 5 }}
                   />
                 </div>
                 <div className="feedback-submit">
-                  <Button
-                    type="primary"
-                    onClick={handleClickAddCustomerFeedback}
-                  >
-                    Submit
-                  </Button>
+                  <Button type="primary">Submit</Button>
                 </div>
               </div>
             </div>
@@ -282,14 +211,6 @@ export default function BookDetails(props) {
               </div>
             </div>
           </div>
-          {/* 
-            <Button
-              style={{ backgroundColor: "blue", color: "white" }}
-              onClick={handleButtonClickEvent}
-            >
-              button
-            </Button> 
-          */}
         </div>
       </div>
     </React.Fragment>
@@ -300,3 +221,4 @@ export default function BookDetails(props) {
 //   return { click: state.clicked };
 // }
 // export default connect(mapStateToProps)(BookDetails);
+export default connect()(BookDetails);
