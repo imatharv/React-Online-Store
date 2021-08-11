@@ -57,7 +57,7 @@ function WishlistPage(props) {
   return (
     <div className="wishlist-layout-content">
       <div className="wishlist-details-wrapper">
-        <div className="wishlist-details-header">
+        <div className="wishlist-details-header ">
           <div>
             <h3>My wishlist({products.length})</h3>
           </div>
