@@ -7,10 +7,10 @@ export default function OrderDetails() {
   const [orderData, setOrderData] = React.useState([]);
   const location = useLocation();
   useEffect(() => {
-    console.log(location.state);
+    console.log(location.state.data);
     // setOrderData(location.state.data);
     // console.log(location.state.data);
-  }, [location]);
+  }, []);
   return (
     <div className="order-details-container">
       <div className="order-details-wrapper">

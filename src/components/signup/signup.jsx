@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
+import { useHistory } from "react-router";
 import "./signupStyles.css";
 import UserService from "../../services/userService";
 const Service = new UserService();
@@ -12,6 +13,13 @@ export default function Signup(props) {
   const [nameErrorMsg, setNameErrorMsg] = React.useState("");
   const [emailErrorMsg, setEmailErrorMsg] = React.useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = React.useState("");
+  const history = useHistory();
+
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+    console.log("Name: ", values.name);
+  };
 
   const handleNameInputChange = (event) => {
     setName(event.target.value);
@@ -86,7 +94,7 @@ export default function Signup(props) {
       };
       Service.registration(data)
         .then((data) => {
-          console.log(data);
+          history.push("/account/signin");
         })
         .catch((error) => {
           console.log("Data posting error: ", error);
@@ -97,24 +105,68 @@ export default function Signup(props) {
   };
   return (
     <React.Fragment>
-      <Form name="signupForm">
+      <Form
+        name="signupForm"
+        form={form}
+        onFinish={onFinish}
+        scrollToFirstError
+      >
         <label htmlFor="">Full name</label>
-        <Form.Item validateStatus={nameErrorMsg}>
+        <Form.Item
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Please input your name!",
+              whitespace: true,
+            },
+          ]}
+        >
           <Input className="form-input" onChange={handleNameInputChange} />
         </Form.Item>
         <label htmlFor="">Email</label>
-        <Form.Item name="email" validateStatus={emailErrorMsg}>
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
+              required: true,
+              message: "Please input your E-mail!",
+            },
+          ]}
+        >
           <Input className="form-input" onChange={handleEmailInputChange} />
         </Form.Item>
         <label htmlFor="">Password</label>
-        <Form.Item name="password" validateStatus={passwordErrorMsg}>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+          hasFeedback
+        >
           <Input.Password
             className="form-input-password"
             onChange={handlePasswordInputChange}
           />
         </Form.Item>
         <label htmlFor="">Phone number</label>
-        <Form.Item validateStatus="">
+        <Form.Item
+          name="phoneNumber"
+          rules={[
+            {
+              required: true,
+              message: "Please input your phone number!",
+              whitespace: true,
+            },
+          ]}
+        >
           <Input
             className="form-input"
             onChange={handlePhoneNumberInputChange}
@@ -122,9 +174,9 @@ export default function Signup(props) {
         </Form.Item>
         <Form.Item>
           <Button
-            htmlType="button"
+            htmlType="submit"
             className="submit-button"
-            onClick={register}
+            //onClick={register}
             block
           >
             Signup

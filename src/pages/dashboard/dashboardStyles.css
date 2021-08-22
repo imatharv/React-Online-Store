@@ -25,32 +25,36 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
 }
 #components-layout-demo-top .logo {
   width: 120px;
   height: 31px;
-  margin: 16px 24px 16px 0;
+  /* margin: 16px 24px 16px 0; */
   background: rgba(255, 255, 255, 0.3);
 }
-.ant-row-rtl #components-layout-demo-top .logo {
-  margin: 16px 0 16px 24px;
+.ant-layout-header .logo h3 {
+  font-weight: 300 !important;
+  font-size: 20px;
+  margin-bottom: 7px;
 }
+/* .ant-row-rtl #components-layout-demo-top .logo {
+  margin: 16px 0 16px 24px;
+} */
 .ant-menu-item-active {
   background: transparent !important;
 }
 .ant-input-group-addon {
   position: relative;
-  padding: 0px;
   color: rgba(0, 0, 0, 0.85);
   font-weight: normal;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border: none !important;
-  border-radius: 2px;
+  border-radius: 5px;
   transition: all 0.3s;
 }
 .ant-layout-header .dropdown-item {
@@ -64,11 +68,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 60px;
   padding: 20px 50px;
   color: rgba(0, 0, 0, 0.85);
   line-height: 50px;
   background: #a03037;
+  box-shadow: 0rem 0.25rem 0.75rem rgb(0, 0, 0, 15%);
 }
 .ant-layout-header .cart-items-count .ant-badge {
   color: unset !important;
@@ -94,7 +99,7 @@
 .ant-menu.ant-menu-dark,
 .ant-menu-dark .ant-menu-sub,
 .ant-menu.ant-menu-dark .ant-menu-sub {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.75);
   background: #a03037;
 }
 .ant-menu.ant-menu-dark .ant-menu-item-selected,
@@ -116,8 +121,29 @@
   margin-left: 10px;
 }
 .ant-input-search {
+  margin-bottom: 1px;
   max-width: 400px;
+  box-shadow: 0rem 0.5rem 1rem rgb(0, 0, 0, 10%);
 }
+.ant-input-search-button {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  padding: 4px 4px 4px 6px;
+  color: rgba(0, 0, 0, 0.85);
+}
+.search {
+  border: none !important;
+  padding: 6px;
+  border-radius: 5px;
+}
+/* input[type="text"] {
+  border: 1px solid white !important;
+  border: 1px solid white !important;
+} */
 
 /* MEDIA SCREEN */
 

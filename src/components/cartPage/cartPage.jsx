@@ -168,7 +168,6 @@ function CartPage(props) {
   };
   const addOrder = () => {
     if (validate()) {
-      console.log("add order api call");
       const token = window.sessionStorage.getItem("accessToken");
       let orders = [];
       for (let i = 0; i < cartItems.length; i++) {
@@ -183,14 +182,13 @@ function CartPage(props) {
       let data = {
         orders: orders,
       };
-      console.log(data);
       Service.addOrder(data, token)
-        .then((data) => {
-          console.log(props);
-          props.history.push({
+        .then((res) => {
+          history.push({
             pathname: "/dashboard/order",
-            // state: { data: data },
+            state: { data: res.data },
           });
+          // history.push("/dashboard/order");
         })
         .catch((error) => {
           console.log(error);

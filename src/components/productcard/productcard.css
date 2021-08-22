@@ -9,9 +9,17 @@
   padding-top: 10px;
 }
 .product-list .ant-card {
-  margin: 10px !important;
+  margin: 12px !important;
   position: relative;
-  border: 2px solid rgb(236, 236, 236);
+  border: 1px solid rgb(236, 236, 236);
+  box-shadow: 0rem 0.2rem 0.6rem rgb(0, 0, 0, 6%);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+.product-list .ant-card:hover {
+  box-shadow: 0rem 0.4rem 1.25rem rgb(0, 0, 0, 12%);
+  border-radius: 10px;
+  cursor: pointer;
 }
 .ant-card-cover {
   padding: 20px 40px;
@@ -20,6 +28,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .ant-card-cover img {
   height: 140px;

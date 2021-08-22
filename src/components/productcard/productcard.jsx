@@ -13,13 +13,26 @@ export default function ProductCard(props) {
   let history = useHistory();
   const [booksData, setBooksData] = React.useState(props.data);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postsPerPage] = React.useState(10);
+  const [postsPerPage] = React.useState(8);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  let currentPosts = booksData.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Chnage page
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleSortChange = (e, value) => {
     // setSortType(e.target.value);
     // console.log(e.target.value);
     console.log(value.value);
     switch (value.value) {
+      case "relevance":
+        sortByRelevance();
+        break;
       case "price-asc":
         sortPriceLowToHigh();
         break;
@@ -31,13 +44,17 @@ export default function ProductCard(props) {
         break;
     }
   };
+  const sortByRelevance = () => {
+    console.log("low to high");
+    currentPosts = booksData;
+  };
   const sortPriceLowToHigh = () => {
     console.log("low to high");
     let sortedPriceAsc = booksData.sort(
-      (item1, item2) => item1.discountPrice - item2.discountPrice
+      (item1, item2) => item2.discountPrice - item1.discountPrice
     );
     console.log(sortedPriceAsc);
-    setBooksData(sortedPriceAsc);
+    currentPosts = sortedPriceAsc;
   };
   const sortPriceHighToLow = () => {
     console.log("high to low");
@@ -45,7 +62,7 @@ export default function ProductCard(props) {
       .sort((item1, item2) => item1.discountPrice - item2.discountPrice)
       .reverse();
     console.log(sortedPriceDesc);
-    setBooksData(sortedPriceDesc);
+    currentPosts = sortedPriceDesc;
   };
   const handleClickOpenProductDetails = (e, data) => {
     //props.dispatch({ type: "bookClicked", data: data });
@@ -53,16 +70,6 @@ export default function ProductCard(props) {
       pathname: "/dashboard/product",
       state: { data: data },
     });
-  };
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = booksData.slice(indexOfFirstPost, indexOfLastPost);
-
-  // Chnage page
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
   };
 
   return (
