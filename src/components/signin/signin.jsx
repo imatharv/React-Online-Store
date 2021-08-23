@@ -6,15 +6,36 @@ import { useHistory } from "react-router";
 const Service = new UserService();
 
 export default function Signin(props) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const history = useHistory();
-  const handleEmailInputChange = (event) => {
-    setEmail(event.target.value);
+  const onFinish = (values) => {
+    let data = {
+      email: values.email,
+      password: values.password,
+    };
+    Service.login(data)
+      .then((data) => {
+        window.sessionStorage.setItem(
+          "accessToken",
+          data.data.result.accessToken
+        );
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const handlePasswordInputChange = (event) => {
-    setPassword(event.target.value);
-  };
+
+  // const [email, setEmail] = React.useState("");
+  // const [password, setPassword] = React.useState("");
+
+  // const handleEmailInputChange = (event) => {
+  //   setEmail(event.target.value);
+  // };
+
+  // const handlePasswordInputChange = (event) => {
+  //   setPassword(event.target.value);
+  // };
+
   // const validate = () => {
   //   let valid = true;
   //   // validating email address
@@ -33,25 +54,6 @@ export default function Signin(props) {
   //   }
   //   return valid;
   // };
-
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-    let data = {
-      email: values.email,
-      password: values.password,
-    };
-    Service.login(data)
-      .then((data) => {
-        window.sessionStorage.setItem(
-          "accessToken",
-          data.data.result.accessToken
-        );
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   // const login = () => {
   //   if (validate()) {
