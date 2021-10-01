@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { useHistory } from "react-router";
 import "./signupStyles.css";
@@ -6,9 +6,39 @@ import UserService from "../../services/userService";
 const Service = new UserService();
 
 export default function Signup(props) {
+  const [passwordValidation, setPasswordValidation] = useState(
+    "Please input your password"
+  );
   const history = useHistory();
   const [form] = Form.useForm();
+
+  const validate = (values) => {
+    let valid = true;
+    //validating password
+    if (values.password.length != 0) {
+      if (
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/.test(
+          values.password
+        )
+      ) {
+        setPasswordValidation("");
+      } else {
+        valid = false;
+        setPasswordValidation(
+          "Password should be alphanumeric (min 8 charectors, atleast one alphabate, one number & one special charector)"
+        );
+      }
+    } else {
+      valid = false;
+      setPasswordValidation("Password is required");
+    }
+    return valid;
+  };
+
   const onFinish = (values) => {
+    // let result = validate(values);
+    // console.log(result);
+    // if (validate(values)) {
     let data = {
       fullName: values.name,
       email: values.email,
@@ -22,6 +52,7 @@ export default function Signup(props) {
       .catch((error) => {
         console.log(error);
       });
+    // }
   };
 
   // const [name, setName] = React.useState("");
@@ -152,13 +183,17 @@ export default function Signup(props) {
           ]}
         >
           <Input className="form-input" />
+          xc
         </Form.Item>
         <label htmlFor="">Password</label>
         <Form.Item
           name="password"
+          // validateStatus="warning"
+          // help="Please input your password"
           rules={[
             {
               required: true,
+              // message: { passwordValidation },
               message: "Please input your password",
             },
           ]}
@@ -180,12 +215,7 @@ export default function Signup(props) {
           <Input className="form-input" />
         </Form.Item>
         <Form.Item>
-          <Button
-            htmlType="submit"
-            className="submit-button"
-            //onClick={register}
-            block
-          >
+          <Button htmlType="submit" className="submit-button" block>
             Signup
           </Button>
         </Form.Item>
